@@ -23,3 +23,5 @@ test:
 clean:
 	@echo ">> removing binaries"
 	rm -rf $(BUILD_DIR)
+
+.PHONY: build-server build-worker build test clean
