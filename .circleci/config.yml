@@ -24,5 +24,7 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - docker-publish-server
-      - docker-publish-worker
+      - docker-publish-server:
+          context: forgestatus
+      - docker-publish-worker:
+          context: forgestatus
