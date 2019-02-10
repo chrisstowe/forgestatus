@@ -1,2 +1,10 @@
+# compiled code
+build/
+
+# editors
+.vs/
+.vscode/
+.idea/
+
 # misc
 .DS_STORE
