@@ -14,4 +14,6 @@ WORKDIR /opt/app
 # install app
 COPY --from=build-env /go/src/github.com/chrisstowe/forgestatus/goApp .
 
+EXPOSE 80
+
 ENTRYPOINT [ "./goApp" ]
