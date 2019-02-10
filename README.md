@@ -8,6 +8,11 @@ A distributed system status and metric checker. 🔎
 
 A visual dashboard for this service can be found at [forgestatus-dashboard](https://github.com/chrisstowe/forgestatus-dashboard)
 
+### Live Builds
+
+Dev: dev.forgestatus.com
+Prod: forgestatus.com
+
 ## How to run locally
 
 ```
