@@ -1,8 +1,8 @@
 GO := go
 PKGS := $(shell $(GO) list ./...)
-BUILD_DIR := build
 SERVER_NAME := forgestatus-server
 WORKER_NAME := forgestatus-worker
+BUILD_DIR ?= build
 
 all: build test
 
