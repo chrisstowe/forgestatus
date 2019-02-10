@@ -1,20 +1,28 @@
 version: 2
 jobs:
-  build:
-    docker:
-      - image: circleci/golang:1.11
+  docker-publish-server:
+    machine: true
 
-    working_directory: /go/src/github.com/chrisstowe/forgestatus
+    working_directory: ~/repo
 
     steps:
       - checkout
 
-      - run: go get -v -t -d ./...
+      - run: SERVICE=server ./deploy/push-image.sh
 
-      - run: go test -v ./...
+  docker-publish-worker:
+    machine: true
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run: SERVICE=worker ./deploy/push-image.sh
 
 workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build
+      - docker-publish-server
+      - docker-publish-worker
