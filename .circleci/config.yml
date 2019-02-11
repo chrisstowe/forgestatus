@@ -1,5 +1,27 @@
 version: 2
 jobs:
+  unit-test-server:
+    docker:
+      - image: golang:1.11-alpine
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run: go test -v github.com/chrisstowe/forgestatus/forgestatus-server
+
+  unit-test-worker:
+    docker:
+      - image: golang:1.11-alpine
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run: go test -v github.com/chrisstowe/forgestatus/forgestatus-worker
+
   create-deploy-config:
     machine: true
 
@@ -53,11 +75,19 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
+      - unit-test-server
+      - unit-test-worker
       - create-deploy-config
       - docker-publish-server:
           context: forgestatus
+          requires:
+            - unit-test-server
+            - unit-test-worker
       - docker-publish-worker:
           context: forgestatus
+          requires:
+            - unit-test-server
+            - unit-test-worker
       - deploy:
           context: forgestatus
           requires:
