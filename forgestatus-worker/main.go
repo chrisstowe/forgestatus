@@ -9,7 +9,7 @@ import (
 )
 
 func greet(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello %v! %s", common.Greet("worker"), time.Now())
+	fmt.Fprintf(w, "%v! %s", common.Greet("worker"), time.Now())
 }
 
 func health(w http.ResponseWriter, r *http.Request) {
