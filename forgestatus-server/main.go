@@ -22,7 +22,7 @@ func getServerStatus(w http.ResponseWriter, r *http.Request) {
 }
 
 func getWorkerStatus(w http.ResponseWriter, r *http.Request) {
-	resp, err := http.Get("forgestatus-worker-1-service-dev.default.svc.cluster.local/getStatus")
+	resp, err := http.Get("http://forgestatus-worker-1-service-dev/getStatus")
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("Could not connect to the worker!"))
