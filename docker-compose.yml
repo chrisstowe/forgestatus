@@ -4,7 +4,7 @@ services:
   redis:
     image: redis:5.0-alpine
     ports:
-      - "6000:6379"
+      - "6379:6379"
 
   forgestatus-server:
     depends_on:
@@ -24,8 +24,8 @@ services:
       context: .
       dockerfile: worker.Dockerfile
     environment:
-      - WORKER_ID=1
       - REDIS_URL=redis:6379
+      - WORKER_ID=1
     ports:
       - "4001:80"
 
@@ -36,7 +36,7 @@ services:
       context: .
       dockerfile: worker.Dockerfile
     environment:
-      - WORKER_ID=2
       - REDIS_URL=redis:6379
+      - WORKER_ID=2
     ports:
       - "4002:80"
