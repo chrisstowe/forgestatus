@@ -2,7 +2,7 @@ version: 2
 jobs:
   unit-test-server:
     docker:
-      - image: circleci/golang:1.11-alpine
+      - image: circleci/golang:1.11
 
     working_directory: /go/src/github.com/chrisstowe/forgestatus
 
@@ -13,7 +13,7 @@ jobs:
 
   unit-test-worker:
     docker:
-      - image: circleci/golang:1.11-alpine
+      - image: circleci/golang:1.11
 
     working_directory: /go/src/github.com/chrisstowe/forgestatus
 
@@ -25,7 +25,7 @@ jobs:
   create-deploy-config:
     machine: true
 
-    working_directory: /go/src/github.com/chrisstowe/forgestatus
+    working_directory: ~/repo
 
     steps:
       - checkout
@@ -40,7 +40,7 @@ jobs:
   docker-publish-server:
     machine: true
 
-    working_directory: /go/src/github.com/chrisstowe/forgestatus
+    working_directory: ~/repo
 
     steps:
       - checkout
@@ -50,7 +50,7 @@ jobs:
   docker-publish-worker:
     machine: true
 
-    working_directory: /go/src/github.com/chrisstowe/forgestatus
+    working_directory: ~/repo
 
     steps:
       - checkout
@@ -61,7 +61,7 @@ jobs:
     docker:
       - image: google/cloud-sdk
 
-    working_directory: /go/src/github.com/chrisstowe/forgestatus
+    working_directory: ~/repo
 
     steps:
       - checkout
