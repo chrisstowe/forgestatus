@@ -14,3 +14,6 @@ do
     kubectl apply -f ./config/worker.${WORKER_ID}.deployment.yaml
     kubectl apply -f ./config/worker.${WORKER_ID}.service.yaml
 done
+
+kubectl apply -f ./config/redis.deployment.yaml
+kubectl apply -f ./config/redis.service.yaml

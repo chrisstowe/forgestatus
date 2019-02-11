@@ -17,3 +17,6 @@ do
     envsubst < ./deploy/template.worker.deployment.yaml > ./config/worker.${WORKER_ID}.deployment.yaml
     envsubst < ./deploy/template.worker.service.yaml > ./config/worker.${WORKER_ID}.service.yaml
 done
+
+envsubst < ./deploy/template.redis.deployment.yaml > ./config/redis.deployment.yaml
+envsubst < ./deploy/template.redis.service.yaml > ./config/redis.service.yaml
