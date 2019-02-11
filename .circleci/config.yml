@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: golang:1.11-alpine
 
-    working_directory: ~/repo
+    working_directory: /go/src/github.com/chrisstowe/forgestatus
 
     steps:
       - checkout
@@ -15,7 +15,7 @@ jobs:
     docker:
       - image: golang:1.11-alpine
 
-    working_directory: ~/repo
+    working_directory: /go/src/github.com/chrisstowe/forgestatus
 
     steps:
       - checkout
@@ -25,7 +25,7 @@ jobs:
   create-deploy-config:
     machine: true
 
-    working_directory: ~/repo
+    working_directory: /go/src/github.com/chrisstowe/forgestatus
 
     steps:
       - checkout
@@ -40,7 +40,7 @@ jobs:
   docker-publish-server:
     machine: true
 
-    working_directory: ~/repo
+    working_directory: /go/src/github.com/chrisstowe/forgestatus
 
     steps:
       - checkout
@@ -50,7 +50,7 @@ jobs:
   docker-publish-worker:
     machine: true
 
-    working_directory: ~/repo
+    working_directory: /go/src/github.com/chrisstowe/forgestatus
 
     steps:
       - checkout
@@ -61,7 +61,7 @@ jobs:
     docker:
       - image: google/cloud-sdk
 
-    working_directory: ~/repo
+    working_directory: /go/src/github.com/chrisstowe/forgestatus
 
     steps:
       - checkout
