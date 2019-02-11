@@ -13,7 +13,7 @@ func greet(w http.ResponseWriter, r *http.Request) {
 }
 
 func health(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("ok"))
+	w.Write([]byte("server - ok"))
 }
 
 func main() {
