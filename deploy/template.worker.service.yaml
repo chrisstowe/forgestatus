@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: forgestatus-worker-${WORKER_ID}-service-${ENV}
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: forgestatus-worker-${WORKER_ID}-${ENV}
   ports:
