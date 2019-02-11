@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"time"
 
@@ -17,33 +16,32 @@ func health(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("ok"))
 }
 
-func getServerStatus(w http.ResponseWriter, r *http.Request) {
+func status(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("server is good"))
 }
 
-func getWorkerStatus(w http.ResponseWriter, r *http.Request) {
-	resp, err := http.Get("http://forgestatus-worker-1-service-dev/getStatus")
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("Could not connect to the worker!"))
-		return
-	}
+// func getWorkerStatus(w http.ResponseWriter, r *http.Request) {
+// 	resp, err := http.Get("http://forgestatus-worker-1-service-dev/getStatus")
+// 	if err != nil {
+// 		w.WriteHeader(http.StatusInternalServerError)
+// 		w.Write([]byte("Could not connect to the worker!"))
+// 		return
+// 	}
 
-	defer resp.Body.Close()
+// 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+// 	body, err := ioutil.ReadAll(resp.Body)
+// 	if err != nil {
+// 		http.Error(w, err.Error(), http.StatusInternalServerError)
+// 		return
+// 	}
 
-	w.Write(body)
-}
+// 	w.Write(body)
+// }
 
 func main() {
 	http.HandleFunc("/", greet)
 	http.HandleFunc("/health", health)
-	http.HandleFunc("/api/getServerStatus", getServerStatus)
-	http.HandleFunc("/api/getWorkerStatus", getWorkerStatus)
+	http.HandleFunc("/server/status", status)
 	http.ListenAndServe(":80", nil)
 }
