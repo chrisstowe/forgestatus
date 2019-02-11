@@ -8,6 +8,9 @@ gcloud container clusters get-credentials forgestatus-cluster --zone us-west2-a
 kubectl apply -f ./config/server.deployment.yaml
 kubectl apply -f ./config/server.service.yaml
 
-WORKER_ID=1
-kubectl apply -f ./config/worker.${WORKER_ID}.deployment.yaml
-kubectl apply -f ./config/worker.${WORKER_ID}.service.yaml
+for i in {1..3}
+do
+    WORKER_ID=${i}
+    kubectl apply -f ./config/worker.${WORKER_ID}.deployment.yaml
+    kubectl apply -f ./config/worker.${WORKER_ID}.service.yaml
+done
