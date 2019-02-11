@@ -13,11 +13,16 @@ func greet(w http.ResponseWriter, r *http.Request) {
 }
 
 func health(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("worker - ok"))
+	w.Write([]byte("ok"))
+}
+
+func getStatus(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("worker is good"))
 }
 
 func main() {
 	http.HandleFunc("/", greet)
 	http.HandleFunc("/health", health)
+	http.HandleFunc("/api/getStatus", getStatus)
 	http.ListenAndServe(":80", nil)
 }
