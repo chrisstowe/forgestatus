@@ -42,6 +42,6 @@ func status(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/", greet)
 	http.HandleFunc("/health", health)
-	http.HandleFunc("/server/status", status)
+	http.HandleFunc("/api/status", status)
 	http.ListenAndServe(":80", nil)
 }
