@@ -10,7 +10,7 @@ A visual dashboard for this service can be found at [forgestatus-dashboard](http
 
 ### Live Builds
 
-[forgestatus.com[](http://forgestatus.com)
+[forgestatus.com](http://forgestatus.com)
 
 [dev.forgestatus.com](http://dev.forgestatus.com)
 
