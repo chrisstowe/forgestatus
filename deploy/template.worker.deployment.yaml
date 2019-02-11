@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: forgestatus-worker-${WORKER_ID}-${ENV}
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: forgestatus-worker-${WORKER_ID}-${ENV}
+    spec:
+      containers:
+      - name: forgestatus-worker-${WORKER_ID}-${ENV}
+        image: gcr.io/forgestatus/forgestatus-worker:${CIRCLE_SHA1}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 20
+          periodSeconds: 10

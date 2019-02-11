@@ -1,0 +1,29 @@
+version: '3'
+services:
+
+  redis:
+    image: redis:5.0-alpine
+    ports:
+      - "3003:6379"
+
+  forgestatus-server:
+    depends_on:
+      - redis
+    build:
+      context: .
+      dockerfile: server.Dockerfile
+    environment:
+      - REDIS_URL=redis:6379
+    ports:
+      - "3001:80"
+
+  forgestatus-worker:
+    depends_on:
+      - redis
+    build:
+      context: .
+      dockerfile: worker.Dockerfile
+    environment:
+      - REDIS_URL=redis:6379
+    ports:
+      - "3002:80"
