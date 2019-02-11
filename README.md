@@ -16,6 +16,20 @@ A visual dashboard for this service can be found at [forgestatus-dashboard](http
 
 ## How to run locally
 
+### Docker
+
 ```
 $ docker-compose up
+```
+
+### Run the worker/server
+
+Requires `GOPATH` to be set and `GOPATH/bin` in your path.
+
+More info on why this is required: [How to Write Go Code](https://golang.org/doc/code.html)
+
+```
+$ go install ./..
+$ forgestatus-server
+$ forgestatus-worker
 ```
