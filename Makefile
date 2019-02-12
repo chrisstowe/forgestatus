@@ -12,10 +12,15 @@ get-dep:
 	$(GO) get -d ./$(SERVER_NAME)
 	$(GO) get -d ./$(WORKER_NAME)
 
-build: get-dep
-	@echo ">> building binaries"
+build-server: get-dep
+	@echo ">> building $(SERVER_NAME) binaries"
 	$(GO) build -o $(BUILD_DIR)/$(SERVER_NAME) ./$(SERVER_NAME)
+
+build-worker: get-dep
+	@echo ">> building $(WORKER_NAME) binaries"
 	$(GO) build -o $(BUILD_DIR)/$(WORKER_NAME) ./$(WORKER_NAME)
+
+build: build-server build-worker
 
 install: get-dep
 	@echo ">> installing binaries"
@@ -29,4 +34,4 @@ clean:
 	@echo ">> removing binaries"
 	rm -rf $(BUILD_DIR)
 
-.PHONY: get-dep build install test clean
+.PHONY: get-dep build-server build-worker build install test clean

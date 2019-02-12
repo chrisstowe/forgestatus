@@ -21,3 +21,9 @@ A visual dashboard for this service can be found at [forgestatus-dashboard](http
 ```
 $ docker-compose up
 ```
+
+## Install locally
+
+```
+$ make install
+```
