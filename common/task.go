@@ -9,7 +9,7 @@ type TaskType string
 
 // Enumerated TaskTypes.
 const (
-	GetUsedMemory        TaskType = "GetUsedMemory"
+	GetMemoryUsed        TaskType = "GetMemoryUsed"
 	GetCpuUsed           TaskType = "GetCpuUsed"
 	GetDiskUsed          TaskType = "GetDiskUsed"
 	GetProcsRunning      TaskType = "GetProcsRunning"

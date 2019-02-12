@@ -8,7 +8,7 @@ import (
 const mockTime = "2019-02-11T18:27:02.566923-08:00"
 
 func TestDeserializeTaskSuccess(t *testing.T) {
-	expectedType := GetUsedMemory
+	expectedType := GetMemoryUsed
 	expectedTime := mockTime
 
 	expectedTask := Task{
@@ -39,7 +39,7 @@ func TestDeserializeTaskFailsWithBadData(t *testing.T) {
 }
 
 func TestSerializeTaskSuccess(t *testing.T) {
-	expectedType := GetUsedMemory
+	expectedType := GetMemoryUsed
 	expectedTime := mockTime
 
 	expectedSerializedTask := fmt.Sprintf("{\"type\":\"%s\",\"time\":\"%s\"}",
