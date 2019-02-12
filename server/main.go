@@ -8,8 +8,8 @@ import (
 	"github.com/chrisstowe/forgestatus/common"
 )
 
-func greet(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "%v! %s", common.Greet("server"), time.Now())
+func hello(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello: %s", time.Now())
 }
 
 func health(w http.ResponseWriter, r *http.Request) {
@@ -40,7 +40,7 @@ func status(w http.ResponseWriter, r *http.Request) {
 // }
 
 func main() {
-	http.HandleFunc("/", greet)
+	http.HandleFunc("/", hello)
 	http.HandleFunc("/health", health)
 	http.HandleFunc("/api/status", status)
 	http.ListenAndServe(":"+common.EnvConfig.Port, nil)
