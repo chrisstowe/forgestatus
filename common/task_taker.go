@@ -21,12 +21,9 @@ func NewTaskTaker(redisURL string) TaskTaker {
 }
 
 func (tt *taskTaker) TakeNextTask() (*Task, error) {
-	// This queue is specific to each worker.
-	processingQueue := ProcessingTaskQueue + EnvConfig.WorkerID
-
 	// Move a task from the pending queue into a processing one.
 	// This is an atomic operation, so no data is lost.
-	result, err := tt.client.BRPopLPush(PendingTaskQueue, processingQueue, 0).Result()
+	result, err := tt.client.BRPopLPush(PendingQueue, ProcessingQueue, 0).Result()
 	if err != nil {
 		return nil, err
 	}
@@ -35,7 +32,7 @@ func (tt *taskTaker) TakeNextTask() (*Task, error) {
 	// This is an arbitrary limitation that can be improved later.
 	// There is also no process for pushing stale tasks back into the pending queue.
 	// This is an O(1) operation (since the worst case is always removing 1).
-	err = tt.client.LTrim(processingQueue, 0, 0).Err()
+	err = tt.client.LTrim(ProcessingQueue, 0, 0).Err()
 	if err != nil {
 		return nil, err
 	}

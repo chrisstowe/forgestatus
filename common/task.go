@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 )
 
-// PendingTaskQueue is the task queue name for pending task work.
-const PendingTaskQueue = "pendingQueue"
+// PendingQueue is the queue name for pending task work.
+const PendingQueue = "pendingQueue"
 
-// ProcessingTaskQueue is the task queue name for tasks currently being processed.
-const ProcessingTaskQueue = "processingQueue"
+// ProcessingQueue is the queue name for tasks currently being processed.
+// This queue is specific to each worker.
+var ProcessingQueue = "processingQueue" + EnvConfig.WorkerID
 
 // TaskType represents the type of work to perform.
 type TaskType string

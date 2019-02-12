@@ -26,7 +26,7 @@ func (ts *taskScheduler) ScheduleTask(task Task) error {
 		return err
 	}
 
-	err = ts.client.LPush(PendingTaskQueue, s).Err()
+	err = ts.client.LPush(PendingQueue, s).Err()
 	if err != nil {
 		return err
 	}
@@ -34,7 +34,7 @@ func (ts *taskScheduler) ScheduleTask(task Task) error {
 	// Prevent too many tasks from building up.
 	// In a real system, the number of workers should probably be scaled up.
 	// This is an O(1) operation (since the worst case is always removing 1).
-	err = ts.client.LTrim(PendingTaskQueue, 0, EnvConfig.MaxTaskQueueSize-1).Err()
+	err = ts.client.LTrim(PendingQueue, 0, EnvConfig.MaxTaskQueueSize-1).Err()
 	if err != nil {
 		return err
 	}
