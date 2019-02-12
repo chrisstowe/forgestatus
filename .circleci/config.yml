@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout
 
-      - run: go test -v github.com/chrisstowe/forgestatus/forgestatus-server
+      - run: go test -v github.com/chrisstowe/forgestatus/server
 
   unit-test-worker:
     docker:
@@ -20,7 +20,7 @@ jobs:
     steps:
       - checkout
 
-      - run: go test -v github.com/chrisstowe/forgestatus/forgestatus-worker
+      - run: go test -v github.com/chrisstowe/forgestatus/worker
 
   create-deploy-config:
     machine: true

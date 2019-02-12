@@ -43,5 +43,5 @@ func main() {
 	http.HandleFunc("/", greet)
 	http.HandleFunc("/health", health)
 	http.HandleFunc("/api/status", status)
-	http.ListenAndServe(":80", nil)
+	http.ListenAndServe(":"+common.EnvConfig.Port, nil)
 }

@@ -6,7 +6,7 @@ services:
     ports:
       - "6379:6379"
 
-  forgestatus-server:
+  server:
     depends_on:
       - redis
     build:
@@ -17,7 +17,7 @@ services:
     ports:
       - "5000:80"
 
-  forgestatus-worker-1:
+  worker-1:
     depends_on:
       - redis
     build:
@@ -29,7 +29,7 @@ services:
     ports:
       - "4001:80"
 
-  forgestatus-worker-2:
+  worker-2:
     depends_on:
       - redis
     build:

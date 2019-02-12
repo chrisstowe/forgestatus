@@ -3,17 +3,17 @@ FROM golang:1.11-alpine as build-env
 WORKDIR /go/src/github.com/chrisstowe/forgestatus
 
 COPY common ./common
-COPY forgestatus-server ./forgestatus-server
+COPY server ./server
 
-RUN go build -o ./goApp ./forgestatus-server
+RUN go build -o ./serverApp ./server
 
 FROM alpine
 
 WORKDIR /opt/app
 
 # install app
-COPY --from=build-env /go/src/github.com/chrisstowe/forgestatus/goApp .
+COPY --from=build-env /go/src/github.com/chrisstowe/forgestatus/serverApp .
 
 EXPOSE 80
 
-ENTRYPOINT [ "./goApp" ]
+ENTRYPOINT [ "./serverApp" ]
