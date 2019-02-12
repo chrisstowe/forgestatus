@@ -8,16 +8,16 @@ import (
 	"github.com/chrisstowe/forgestatus/common"
 )
 
-func hello(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello: %s", time.Now())
+func timeHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Time: %s", time.Now())
 }
 
-func health(w http.ResponseWriter, r *http.Request) {
+func healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("ok"))
 }
 
-func status(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("server is good"))
+func statusHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("ok"))
 }
 
 // func getWorkerStatus(w http.ResponseWriter, r *http.Request) {
@@ -40,8 +40,8 @@ func status(w http.ResponseWriter, r *http.Request) {
 // }
 
 func main() {
-	http.HandleFunc("/", hello)
-	http.HandleFunc("/health", health)
-	http.HandleFunc("/api/status", status)
+	http.HandleFunc("/", timeHandler)
+	http.HandleFunc("/health", healthHandler)
+	http.HandleFunc("/api/status", statusHandler)
 	http.ListenAndServe(":"+common.EnvConfig.Port, nil)
 }

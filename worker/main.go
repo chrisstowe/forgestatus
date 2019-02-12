@@ -4,27 +4,20 @@ import (
 	"fmt"
 	"net/http"
 	"time"
-
-	"github.com/chrisstowe/forgestatus/common"
 )
 
-func hello(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello: %s", time.Now())
+func timeHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Time: %s", time.Now())
 }
 
-func health(w http.ResponseWriter, r *http.Request) {
+func healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("ok"))
-}
-
-func status(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "worker %v is good", common.EnvConfig.WorkerID)
 }
 
 func main() {
 	// common.ExampleNewClient()
 	// common.Test()
-	// http.HandleFunc("/", hello)
-	// http.HandleFunc("/health", health)
-	// http.HandleFunc("/status", status)
+	// http.HandleFunc("/", timeHandler)
+	// http.HandleFunc("/health", healthHandler)
 	//http.ListenAndServe(":"+common.EnvConfig.Port, nil)
 }
