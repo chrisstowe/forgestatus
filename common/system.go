@@ -21,8 +21,8 @@ func MemoryUsed() float64 {
 
 const cpuCheckDuration = 500 * time.Millisecond
 
-// CpuUsed returns the percentage of cpu used.
-func CpuUsed() float64 {
+// CPUUsed returns the percentage of cpu used.
+func CPUUsed() float64 {
 	c, err := cpu.Percent(cpuCheckDuration, false)
 	if err != nil || len(c) < 1 {
 		return 0.0
