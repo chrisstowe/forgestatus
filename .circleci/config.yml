@@ -9,6 +9,8 @@ jobs:
     steps:
       - checkout
 
+      - run: go get -v -t -d github.com/chrisstowe/forgestatus/server
+
       - run: go test -v github.com/chrisstowe/forgestatus/server
 
   unit-test-worker:
@@ -19,6 +21,8 @@ jobs:
 
     steps:
       - checkout
+
+      - run: go get -v -t -d github.com/chrisstowe/forgestatus/worker
 
       - run: go test -v github.com/chrisstowe/forgestatus/worker
 
