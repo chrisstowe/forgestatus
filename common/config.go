@@ -1,17 +1,36 @@
 package common
 
-import "os"
+import (
+	"os"
+	"strconv"
+)
 
-// Config holds required and optional config parameters.
+// Config holds required and optional system parameters.
 type Config struct {
-	Port,
-	RedisURL,
-	WorkerID string
+	Port             string
+	RedisURL         string
+	WorkerID         string
+	MaxTaskQueueSize int64
 }
 
-// EnvConfig holds the current environment configs.
-var EnvConfig = Config{
-	Port:     os.Getenv("PORT"),
-	RedisURL: os.Getenv("REDIS_URL"),
-	WorkerID: os.Getenv("WORKER_ID"),
+// EnvConfig holds required and optional environment parameters.
+var EnvConfig = newConfig()
+
+func newConfig() Config {
+	port := os.Getenv("PORT")
+	redisURL := os.Getenv("REDIS_URL")
+	workerID := os.Getenv("WORKER_ID")
+
+	s := os.Getenv("MAX_TASK_QUEUE_SIZE")
+	maxTaskQueueSize, err := strconv.ParseInt(s, 10, 64)
+	if err != nil {
+		maxTaskQueueSize = 100
+	}
+
+	return Config{
+		Port:             port,
+		RedisURL:         redisURL,
+		WorkerID:         workerID,
+		MaxTaskQueueSize: maxTaskQueueSize,
+	}
 }
