@@ -1,9 +1,12 @@
 FROM golang:1.11-alpine as build-env
+RUN apk add git
 
 WORKDIR /go/src/github.com/chrisstowe/forgestatus
 
 COPY common ./common
 COPY worker ./worker
+
+RUN go get -d ./worker
 
 RUN go build -o ./workerApp ./worker
 
