@@ -10,7 +10,7 @@ type TaskType string
 // Enumerated TaskTypes.
 const (
 	GetMemoryUsed        TaskType = "GetMemoryUsed"
-	GetCpuUsed           TaskType = "GetCpuUsed"
+	GetCPUUsed           TaskType = "GetCPUUsed"
 	GetDiskUsed          TaskType = "GetDiskUsed"
 	GetProcsRunning      TaskType = "GetProcsRunning"
 	GetRequestsProcessed TaskType = "GetRequestsProcessed"
@@ -21,6 +21,7 @@ const (
 type Task struct {
 	Type TaskType `json:"type"`
 	Time string   `json:"time"`
+	ID   int      `json:"id"`
 }
 
 // DeserializeTask takes a JSON string and converts it to a task.

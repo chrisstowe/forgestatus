@@ -10,14 +10,16 @@ const mockTime = "2019-02-11T18:27:02.566923-08:00"
 func TestDeserializeTaskSuccess(t *testing.T) {
 	expectedType := GetMemoryUsed
 	expectedTime := mockTime
+	expectedID := 2233
 
 	expectedTask := Task{
 		Type: expectedType,
 		Time: expectedTime,
+		ID:   expectedID,
 	}
 
-	serializedTask := fmt.Sprintf("{\"type\":\"%s\",\"time\":\"%s\"}",
-		expectedType, expectedTime)
+	serializedTask := fmt.Sprintf("{\"type\":%q,\"time\":%q,\"id\":%d}",
+		expectedType, expectedTime, expectedID)
 
 	actualTask, err := DeserializeTask(serializedTask)
 	if err != nil {
@@ -41,13 +43,15 @@ func TestDeserializeTaskFailsWithBadData(t *testing.T) {
 func TestSerializeTaskSuccess(t *testing.T) {
 	expectedType := GetMemoryUsed
 	expectedTime := mockTime
+	expectedID := 2233
 
-	expectedSerializedTask := fmt.Sprintf("{\"type\":\"%s\",\"time\":\"%s\"}",
-		expectedType, expectedTime)
+	expectedSerializedTask := fmt.Sprintf("{\"type\":%q,\"time\":%q,\"id\":%d}",
+		expectedType, expectedTime, expectedID)
 
 	task := Task{
 		Type: expectedType,
 		Time: expectedTime,
+		ID:   expectedID,
 	}
 
 	actualSerializedTask, err := SerializeTask(task)
