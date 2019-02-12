@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/rs/xid"
+
 	"github.com/chrisstowe/forgestatus/common"
 )
 
@@ -39,7 +41,23 @@ func statusHandler(w http.ResponseWriter, r *http.Request) {
 // 	w.Write(body)
 // }
 
+func scheduledTasks() {
+	taskScheduler := common.NewTaskScheduler(common.EnvConfig.RedisURL)
+
+	task := common.Task{
+		Type: common.GetMemoryUsed,
+		Time: time.Now().Format(time.RFC3339Nano),
+		ID:   xid.New().String(),
+	}
+
+	taskScheduler.ScheduleTask(task)
+}
+
 func main() {
+	// ticker := time.NewTicker(200 * time.Millisecond)
+	// for range ticker.C {
+	// 	scheduledTasks()
+	// }
 	http.HandleFunc("/", timeHandler)
 	http.HandleFunc("/health", healthHandler)
 	http.HandleFunc("/api/status", statusHandler)

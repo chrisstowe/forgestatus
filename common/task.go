@@ -1,6 +1,8 @@
 package common
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 // PendingTaskQueue is the task queue name for pending task work.
 const PendingTaskQueue = "pendingQueue"
