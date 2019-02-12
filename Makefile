@@ -1,27 +1,32 @@
 GO := go
-PKGS := $(shell $(GO) list ./...)
 SERVER_NAME := server
 WORKER_NAME := worker
+
+# Set this var to override the build directory.
 BUILD_DIR ?= build
 
-all: build test
+all: test install
 
-build-server:
-	@echo ">> building $(SERVER_NAME) binaries"
+get-dep:
+	@echo ">> getting dependencies"
+	$(GO) get -d ./$(SERVER_NAME)
+	$(GO) get -d ./$(WORKER_NAME)
+
+build: get-dep
+	@echo ">> building binaries"
 	$(GO) build -o $(BUILD_DIR)/$(SERVER_NAME) ./$(SERVER_NAME)
-
-build-worker:
-	@echo ">> building $(WORKER_NAME) binaries"
 	$(GO) build -o $(BUILD_DIR)/$(WORKER_NAME) ./$(WORKER_NAME)
 
-build: build-server build-worker
+install: get-dep
+	@echo ">> installing binaries"
+	$(GO) install ./server ./worker
 
-test:
+test: get-dep
 	@echo ">> testing binaries"
-	$(GO) test -short -race $(PKGS)
+	$(GO) test -v ./common ./server ./worker
 
 clean:
 	@echo ">> removing binaries"
 	rm -rf $(BUILD_DIR)
 
-.PHONY: build-server build-worker build test clean
+.PHONY: get-dep build install test clean
