@@ -1,8 +1,12 @@
 package common
 
-import (
-	"encoding/json"
-)
+import "encoding/json"
+
+// PendingTaskQueue is the task queue name for pending task work.
+const PendingTaskQueue = "pendingQueue"
+
+// ProcessingTaskQueue is the task queue name for tasks currently being processed.
+const ProcessingTaskQueue = "processingQueue"
 
 // TaskType represents the type of work to perform.
 type TaskType string
@@ -21,7 +25,8 @@ const (
 type Task struct {
 	Type TaskType `json:"type"`
 	Time string   `json:"time"`
-	ID   int      `json:"id"`
+	ID   string   `json:"id"`
+	Data string   `json:"data"`
 }
 
 // DeserializeTask takes a JSON string and converts it to a task.
