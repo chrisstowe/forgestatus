@@ -14,7 +14,7 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("ok"))
 }
 
-func listenForHttpRequests(port string) {
+func listenForHTTPRequests(port string) {
 	http.HandleFunc("/", timeHandler)
 	http.HandleFunc("/health", healthHandler)
 	http.ListenAndServe(":"+port, nil)

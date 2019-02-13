@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/rs/xid"
@@ -8,7 +9,14 @@ import (
 	"github.com/chrisstowe/forgestatus/common"
 )
 
+func recoverName() {
+	if r := recover(); r != nil {
+		fmt.Println("Recovered from ", r)
+	}
+}
+
 func scheduledTasks() {
+	defer recoverName()
 	taskScheduler := common.NewTaskScheduler(common.EnvConfig.RedisURL)
 
 	task := common.Task{

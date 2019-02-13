@@ -1,8 +1,13 @@
 package main
 
-import "github.com/chrisstowe/forgestatus/common"
+import (
+	"fmt"
+
+	"github.com/chrisstowe/forgestatus/common"
+)
 
 func main() {
+	fmt.Println("Started Worker ", common.EnvConfig.WorkerID)
 	go startProcessingTasks()
-	listenForHttpRequests(common.EnvConfig.Port)
+	listenForHTTPRequests(common.EnvConfig.Port)
 }

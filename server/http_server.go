@@ -37,7 +37,7 @@ func statusHandler(w http.ResponseWriter, r *http.Request) {
 // 	w.Write(body)
 // }
 
-func listenForHttpRequests(port string) {
+func listenForHTTPRequests(port string) {
 	http.HandleFunc("/", timeHandler)
 	http.HandleFunc("/health", healthHandler)
 	http.HandleFunc("/api/status", statusHandler)
