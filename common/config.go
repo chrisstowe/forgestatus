@@ -10,7 +10,7 @@ type Config struct {
 	Env                string
 	Port               string
 	RedisURL           string
-	WorkerID           string
+	WorkerID           int
 	WorkerCount        int
 	MaxTaskQueueSize   int64
 	MaxResultQueueSize int64
@@ -23,7 +23,12 @@ func newConfig() Config {
 	env := os.Getenv("ENV")
 	port := os.Getenv("PORT")
 	redisURL := os.Getenv("REDIS_URL")
-	workerID := os.Getenv("WORKER_ID")
+
+	wi := os.Getenv("WORKER_ID")
+	workerID, err := strconv.Atoi(wi)
+	if err != nil || workerID < 1 {
+		workerID = 1
+	}
 
 	wc := os.Getenv("WORKER_COUNT")
 	workerCount, err := strconv.Atoi(wc)

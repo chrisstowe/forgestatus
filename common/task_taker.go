@@ -1,6 +1,10 @@
 package common
 
-import "github.com/go-redis/redis"
+import (
+	"strconv"
+
+	"github.com/go-redis/redis"
+)
 
 // TaskTaker takes tasks and sets the results.
 type TaskTaker interface {
@@ -12,8 +16,9 @@ type taskTaker struct {
 	client *redis.Client
 }
 
-var processingQueue = ProcessingQueuePrefix + EnvConfig.WorkerID
-var tasksProcessedCounter = TasksProcessedCounterPrefix + EnvConfig.WorkerID
+var workerString = strconv.Itoa(EnvConfig.WorkerID)
+var processingQueue = ProcessingQueuePrefix + workerString
+var tasksProcessedCounter = TasksProcessedCounterPrefix + workerString
 
 // NewTaskTaker creates a new TaskTaker.
 func NewTaskTaker(redisURL string) TaskTaker {
