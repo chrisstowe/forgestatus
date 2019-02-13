@@ -1,6 +1,11 @@
 package common
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"time"
+
+	"github.com/rs/xid"
+)
 
 // Task represents work to be done.
 type Task struct {
@@ -8,6 +13,15 @@ type Task struct {
 	Time string   `json:"time"`
 	ID   string   `json:"id"`
 	Data string   `json:"data"`
+}
+
+// NewTask creates a new Task.
+func NewTask(t TaskType) *Task {
+	return &Task{
+		Type: t,
+		Time: time.Now().Format(time.RFC3339Nano),
+		ID:   xid.New().String(),
+	}
 }
 
 // DeserializeTask takes a JSON string and converts it to a task.
@@ -22,8 +36,8 @@ func DeserializeTask(s string) (*Task, error) {
 }
 
 // SerializeTask takes a task and converts it to a JSON string.
-func SerializeTask(task *Task) (string, error) {
-	b, err := json.Marshal(task)
+func SerializeTask(t *Task) (string, error) {
+	b, err := json.Marshal(t)
 	if err != nil {
 		return "", err
 	}
