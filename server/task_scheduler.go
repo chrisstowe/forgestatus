@@ -20,7 +20,13 @@ func scheduledTasks() {
 		ID:   xid.New().String(),
 	}
 
-	taskScheduler.ScheduleTask(task)
+	err := taskScheduler.ScheduleTask(task)
+	if err != nil {
+		fmt.Println("Error scheduling tasks", err)
+		return
+	}
+
+	fmt.Println("done")
 }
 
 func recoverName() {

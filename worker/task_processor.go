@@ -14,6 +14,7 @@ func getTasks() {
 
 	task, err := taskTaker.TakeNextTask()
 	if err != nil {
+		fmt.Println("Error taking next task", err)
 		return
 	}
 
