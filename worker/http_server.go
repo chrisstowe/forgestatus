@@ -17,19 +17,19 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func getMemoryUsedHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("33.3"))
+	w.Write([]byte(common.MockSystemMetric(80)))
 }
 
 func getCPUUsedHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("33.3"))
+	w.Write([]byte(common.MockSystemMetric(50)))
 }
 
 func getDiskUsedHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("33.3"))
+	w.Write([]byte(common.MockSystemMetric(20)))
 }
 
 func getProcsRunningHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("33.3"))
+	w.Write([]byte(common.MockSystemMetric(100)))
 }
 
 func listenForHTTPRequests() {

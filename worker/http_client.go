@@ -55,7 +55,7 @@ func getStatusForAllWorkers(t common.TaskType) []string {
 
 		// If this is the current worker, then no request is necessary.
 		if id == common.EnvConfig.WorkerID {
-			status = "22.2"
+			status = common.MockSystemMetric(100)
 		} else {
 			// Failed requests are simply empty values.
 			status, err = getStatus(t, id)
