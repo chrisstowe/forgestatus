@@ -6,9 +6,9 @@ import (
 	"github.com/chrisstowe/forgestatus/common"
 )
 
-func getTasks() {
-	taskTaker := common.NewTaskTaker(common.EnvConfig.RedisURL)
+var taskTaker = common.NewTaskTaker(common.EnvConfig.RedisURL)
 
+func getTasks() {
 	task, err := taskTaker.TakeNextTask()
 	if err != nil {
 		return

@@ -9,6 +9,8 @@ import (
 	"github.com/chrisstowe/forgestatus/common"
 )
 
+var taskScheduler = common.NewTaskScheduler(common.EnvConfig.RedisURL)
+
 func recoverName() {
 	if r := recover(); r != nil {
 		fmt.Println("Recovered from ", r)
@@ -17,7 +19,6 @@ func recoverName() {
 
 func scheduledTasks() {
 	defer recoverName()
-	taskScheduler := common.NewTaskScheduler(common.EnvConfig.RedisURL)
 
 	task := common.Task{
 		Type: common.GetMemoryUsed,

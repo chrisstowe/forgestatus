@@ -9,5 +9,5 @@ import (
 func main() {
 	fmt.Println("Started Worker ", common.EnvConfig.WorkerID)
 	go startProcessingTasks()
-	listenForHTTPRequests(common.EnvConfig.Port)
+	listenForHTTPRequests()
 }

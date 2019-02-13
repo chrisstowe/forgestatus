@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 	"time"
+
+	"github.com/chrisstowe/forgestatus/common"
 )
 
 func timeHandler(w http.ResponseWriter, r *http.Request) {
@@ -37,9 +39,9 @@ func statusHandler(w http.ResponseWriter, r *http.Request) {
 // 	w.Write(body)
 // }
 
-func listenForHTTPRequests(port string) {
+func listenForHTTPRequests() {
 	http.HandleFunc("/", timeHandler)
 	http.HandleFunc("/health", healthHandler)
 	http.HandleFunc("/api/status", statusHandler)
-	http.ListenAndServe(":"+port, nil)
+	http.ListenAndServe(":"+common.EnvConfig.Port, nil)
 }
