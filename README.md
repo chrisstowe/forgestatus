@@ -24,24 +24,26 @@ A visual dashboard for this service can be found at [forgestatus-dashboard](http
 
 #### Extras
 
-- Automated CI/CD with gates and efficient artifact caching
-- Full Kubernetes deployment for two environments.
-- Stackdriver alerts/monitoring of system and site health.
+- Automated CI/CD using [CircleCI](https://circleci.com/) (including gates and efficient artifact caching).
+- Full [Kubernetes (GKE)](https://cloud.google.com/kubernetes-engine/) deployment for two environments.
+- [Stackdriver](https://cloud.google.com/stackdriver/) alerts/monitoring of system and site health.
 - Slack notifications for releases and alerts.
 
 #### Live Builds
 
 These are fully automated and monitored instances.
 
-[forgestatus.com](http://forgestatus.com)
+- [forgestatus.com](http://forgestatus.com)
 
-[dev.forgestatus.com](http://dev.forgestatus.com)
+- [dev.forgestatus.com](http://dev.forgestatus.com)
 
 #### Raw API Data
 
-[forgestatus.com/api/status](http://forgestatus.com/api/status)
+Used for debugging while work is done on [forgestatus-dashboard](https://github.com/chrisstowe/forgestatus-dashboard).
 
-[dev.forgestatus.com/api/status](http://dev.forgestatus.com/api/status)
+- [forgestatus.com/api/status](http://forgestatus.com/api/status)
+
+- [dev.forgestatus.com/api/status](http://dev.forgestatus.com/api/status)
 
 ## Building
 
@@ -63,6 +65,7 @@ This is for local development purposes.
 
 This requires a working [go environment](https://golang.org/doc/code.html)
 A locally running instance of redis is also required.
+
 ```
 $ make
 $ REDIS_URL=localhost:6379 server
