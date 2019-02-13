@@ -42,9 +42,38 @@ func (tt *taskTaker) TakeNextTask() (*Task, error) {
 		return nil, err
 	}
 
-	return &task, nil
+	return task, nil
 }
 
 func (tt *taskTaker) SetTaskResult(task *Task) error {
+	s, err := SerializeTask(task)
+	if err != nil {
+		return err
+	}
+
+	// Push to the queue related to the task type.
+	resultQueue := ResultQueuePrefix + string(task.Type)
+
+	err = tt.client.LPush(resultQueue, s).Err()
+	if err != nil {
+		return err
+	}
+
+	// Prevent too many results from building up.
+	// This is an O(1) operation (since the worst case is always removing 1).
+	err = tt.client.LTrim(resultQueue, 0, EnvConfig.MaxResultQueueSize-1).Err()
+	if err != nil {
+		return err
+	}
+
+	// One task should be worked on at a time.
+	// This is an arbitrary limitation that can be improved later.
+	// Remove the last task in the processing queue.
+	// LREM could also be used here, but the original task would need passed in.
+	err = tt.client.RPop(ProcessingQueue).Err()
+	if err != nil {
+		return err
+	}
+
 	return nil
 }

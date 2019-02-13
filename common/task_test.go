@@ -29,8 +29,8 @@ func TestDeserializeTaskSuccess(t *testing.T) {
 		t.Error(err)
 	}
 
-	if expectedTask != actualTask {
-		t.Errorf("want: %+v, got: %+v.", expectedTask, actualTask)
+	if expectedTask != *actualTask {
+		t.Errorf("want: %+v, got: %+v.", expectedTask, *actualTask)
 	}
 }
 
@@ -52,7 +52,7 @@ func TestSerializeTaskSuccess(t *testing.T) {
 	expectedSerializedTask := fmt.Sprintf("{\"type\":%q,\"time\":%q,\"id\":%q,\"data\":%q}",
 		expectedType, expectedTime, expectedID, expectedData)
 
-	task := Task{
+	task := &Task{
 		Type: expectedType,
 		Time: expectedTime,
 		ID:   expectedID,

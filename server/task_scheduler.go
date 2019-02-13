@@ -20,7 +20,7 @@ func recoverName() {
 func scheduledTasks() {
 	defer recoverName()
 
-	task := common.Task{
+	task := &common.Task{
 		Type: common.GetMemoryUsed,
 		Time: time.Now().Format(time.RFC3339Nano),
 		ID:   xid.New().String(),

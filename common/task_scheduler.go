@@ -6,7 +6,7 @@ import (
 
 // TaskScheduler schedules tasks to be worked on.
 type TaskScheduler interface {
-	ScheduleTask(Task) error
+	ScheduleTask(*Task) error
 	GetTaskResults() ([]Task, error)
 }
 
@@ -20,7 +20,7 @@ func NewTaskScheduler(redisURL string) TaskScheduler {
 	return &taskScheduler{client: c}
 }
 
-func (ts *taskScheduler) ScheduleTask(task Task) error {
+func (ts *taskScheduler) ScheduleTask(task *Task) error {
 	s, err := SerializeTask(task)
 	if err != nil {
 		return err

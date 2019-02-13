@@ -11,6 +11,9 @@ const PendingQueue = "pendingQueue"
 // This queue is specific to each worker.
 var ProcessingQueue = "processingQueue" + EnvConfig.WorkerID
 
+// ResultQueuePrefix is the prefix for all task result types.
+var ResultQueuePrefix = "result"
+
 // TaskType represents the type of work to perform.
 type TaskType string
 
@@ -33,19 +36,19 @@ type Task struct {
 }
 
 // DeserializeTask takes a JSON string and converts it to a task.
-func DeserializeTask(s string) (Task, error) {
-	var task Task
-	err := json.Unmarshal([]byte(s), &task)
+func DeserializeTask(s string) (*Task, error) {
+	task := &Task{}
+	err := json.Unmarshal([]byte(s), task)
 	if err != nil {
-		return Task{}, err
+		return nil, err
 	}
 
 	return task, nil
 }
 
 // SerializeTask tasks a task and converts it to a JSON string.
-func SerializeTask(task Task) (string, error) {
-	b, err := json.Marshal(&task)
+func SerializeTask(task *Task) (string, error) {
+	b, err := json.Marshal(task)
 	if err != nil {
 		return "", err
 	}

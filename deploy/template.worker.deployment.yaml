@@ -18,6 +18,10 @@ spec:
         env:
         - name: REDIS_URL
           value: "http://forgestatus-redis-service-${ENV}:6379"
+        - name: MAX_TASK_QUEUE_SIZE
+          value: "100"
+        - name: MAX_RESULT_QUEUE_SIZE
+          value: "100"
         - name: WORKER_ID
           value: "${WORKER_ID}"
         ports:
