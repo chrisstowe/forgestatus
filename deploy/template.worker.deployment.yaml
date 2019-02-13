@@ -26,6 +26,8 @@ spec:
           value: "100"
         - name: WORKER_ID
           value: "${WORKER_ID}"
+        - name: WORKER_COUNT
+          value: "${WORKER_COUNT}"
         ports:
         - containerPort: 80
         livenessProbe:

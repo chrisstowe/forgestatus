@@ -32,6 +32,7 @@ services:
       - MAX_TASK_QUEUE_SIZE=100
       - MAX_RESULT_QUEUE_SIZE=100
       - WORKER_ID=1
+      - WORKER_COUNT=3
     ports:
       - "4001:80"
 
@@ -47,6 +48,7 @@ services:
       - MAX_TASK_QUEUE_SIZE=100
       - MAX_RESULT_QUEUE_SIZE=100
       - WORKER_ID=2
+      - WORKER_COUNT=3
     ports:
       - "4002:80"
 
@@ -62,5 +64,6 @@ services:
       - MAX_TASK_QUEUE_SIZE=100
       - MAX_RESULT_QUEUE_SIZE=100
       - WORKER_ID=3
+      - WORKER_COUNT=3
     ports:
       - "4003:80"

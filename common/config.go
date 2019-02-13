@@ -10,6 +10,7 @@ type Config struct {
 	Port               string
 	RedisURL           string
 	WorkerID           string
+	WorkerCount        int
 	MaxTaskQueueSize   int64
 	MaxResultQueueSize int64
 }
@@ -22,14 +23,20 @@ func newConfig() Config {
 	redisURL := os.Getenv("REDIS_URL")
 	workerID := os.Getenv("WORKER_ID")
 
-	maxTaskQueue := os.Getenv("MAX_TASK_QUEUE_SIZE")
-	maxTaskQueueSize, err := strconv.ParseInt(maxTaskQueue, 10, 64)
+	wc := os.Getenv("WORKER_COUNT")
+	workerCount, err := strconv.Atoi(wc)
+	if err != nil || workerCount < 1 {
+		workerCount = 1
+	}
+
+	mt := os.Getenv("MAX_TASK_QUEUE_SIZE")
+	maxTaskQueueSize, err := strconv.ParseInt(mt, 10, 64)
 	if err != nil || maxTaskQueueSize < 1 {
 		maxTaskQueueSize = 100
 	}
 
-	maxResultQueue := os.Getenv("MAX_RESULT_QUEUE_SIZE")
-	maxResultQueueSize, err := strconv.ParseInt(maxResultQueue, 10, 64)
+	mr := os.Getenv("MAX_RESULT_QUEUE_SIZE")
+	maxResultQueueSize, err := strconv.ParseInt(mr, 10, 64)
 	if err != nil || maxResultQueueSize < 1 {
 		maxResultQueueSize = 100
 	}
@@ -38,6 +45,7 @@ func newConfig() Config {
 		Port:               port,
 		RedisURL:           redisURL,
 		WorkerID:           workerID,
+		WorkerCount:        workerCount,
 		MaxTaskQueueSize:   maxTaskQueueSize,
 		MaxResultQueueSize: maxResultQueueSize,
 	}
