@@ -9,11 +9,11 @@ import (
 	"github.com/chrisstowe/forgestatus/common"
 )
 
-var client = http.Client{Timeout: 5 * time.Second}
+var client = http.Client{Timeout: time.Second}
 
-func getStatus(taskType common.TaskType, workerID string) (string, error) {
+func getStatus(taskType common.TaskType, workerID int) (string, error) {
 	url := fmt.Sprintf(
-		"http://forgestatus-worker-%s-service-%s/%s",
+		"http://forgestatus-worker-%d-service-%s/%s",
 		workerID,
 		common.EnvConfig.Env,
 		taskType,
@@ -32,4 +32,20 @@ func getStatus(taskType common.TaskType, workerID string) (string, error) {
 	}
 
 	return string(body), nil
+}
+
+func getStatusForAllWorkers(t common.TaskType) []string {
+	results := make([]string, common.EnvConfig.WorkerCount)
+	for i := 0; i < common.EnvConfig.WorkerCount; i++ {
+
+		// Failed requests are simply empty values.
+		status, err := getStatus(t, i+1)
+		if err != nil {
+			status = ""
+		}
+
+		results = append(results, status)
+	}
+
+	return results
 }

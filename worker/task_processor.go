@@ -19,22 +19,12 @@ func getTasks() {
 
 	fmt.Printf("Got task: %+v\n", task)
 
-	switch task.Type {
-	case common.GetMemoryUsed:
-		r := common.NewResult(task.Type, task.ID, []string{"91"})
-		taskTaker.SetTaskResult(r)
-	case common.GetCPUUsed:
-		r := common.NewResult(task.Type, task.ID, []string{"44"})
-		taskTaker.SetTaskResult(r)
-	case common.GetDiskUsed:
-		r := common.NewResult(task.Type, task.ID, []string{"33"})
-		taskTaker.SetTaskResult(r)
-	case common.GetProcsRunning:
-		r := common.NewResult(task.Type, task.ID, []string{"3"})
-		taskTaker.SetTaskResult(r)
-	default:
-		fmt.Println("Unknown task type")
-	}
+	status := getStatusForAllWorkers(task.Type)
+
+	fmt.Printf("Got status for %s: %+v\n", task.Type, task)
+
+	result := common.NewResult(task.Type, task.ID, status)
+	taskTaker.SetTaskResult(result)
 }
 
 func processTasks() {
