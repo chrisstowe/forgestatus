@@ -9,8 +9,8 @@ import (
 	"github.com/shirou/gopsutil/mem"
 )
 
-// MemoryUsed returns the percentage of virtual memory used.
-func MemoryUsed() float64 {
+// CheckMemoryUsed returns the percentage of virtual memory used.
+func CheckMemoryUsed() float64 {
 	v, err := mem.VirtualMemory()
 	if err != nil {
 		return 0.0
@@ -21,8 +21,8 @@ func MemoryUsed() float64 {
 
 const cpuCheckDuration = 500 * time.Millisecond
 
-// CPUUsed returns the percentage of cpu used.
-func CPUUsed() float64 {
+// CheckCPUUsed returns the percentage of cpu used.
+func CheckCPUUsed() float64 {
 	c, err := cpu.Percent(cpuCheckDuration, false)
 	if err != nil || len(c) < 1 {
 		return 0.0
@@ -31,8 +31,8 @@ func CPUUsed() float64 {
 	return c[0]
 }
 
-// DiskUsed returns the percentage of disk space used.
-func DiskUsed() float64 {
+// CheckDiskUsed returns the percentage of disk space used.
+func CheckDiskUsed() float64 {
 	d, err := disk.Usage("/")
 	if err != nil {
 		return 0.0
@@ -41,8 +41,8 @@ func DiskUsed() float64 {
 	return d.UsedPercent
 }
 
-// ProcsRunning returns the number of processes running.
-func ProcsRunning() int {
+// CheckProcsRunning returns the number of processes running.
+func CheckProcsRunning() int {
 	l, err := load.Misc()
 	if err != nil {
 		return 0.0
