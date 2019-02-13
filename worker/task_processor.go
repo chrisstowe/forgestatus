@@ -9,6 +9,8 @@ import (
 var taskTaker = common.NewTaskTaker(common.EnvConfig.RedisURL)
 
 func getTasks() {
+	fmt.Println("Getting tasks")
+
 	task, err := taskTaker.TakeNextTask()
 	if err != nil {
 		return

@@ -19,6 +19,7 @@ func recoverName() {
 
 func scheduledTasks() {
 	defer recoverName()
+	fmt.Println("Scheduling tasks")
 
 	task := &common.Task{
 		Type: common.GetMemoryUsed,
