@@ -17,20 +17,26 @@ func getTasks() {
 		return
 	}
 
-	fmt.Println(task)
+	fmt.Printf("Got task: %+v\n", task)
 
 	switch task.Type {
 	case common.GetMemoryUsed:
-		fmt.Println("getting memory used")
-		// m := common.MemoryUsed()
-		// fmt.Printf("memory used %f \n", m)
+		fmt.Println("mem")
+	case common.GetCPUUsed:
+		fmt.Println("cpu")
+	case common.GetDiskUsed:
+		fmt.Println("disk")
+	case common.GetProcsRunning:
+		fmt.Println("procs")
 	default:
-		fmt.Println("unknown task type")
+		fmt.Println("Unknown task type")
 	}
 }
 
-func startProcessingTasks() {
-	for {
-		getTasks()
-	}
+func processTasks() {
+	go func() {
+		for {
+			getTasks()
+		}
+	}()
 }

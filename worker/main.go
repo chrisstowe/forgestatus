@@ -8,6 +8,6 @@ import (
 
 func main() {
 	fmt.Println("Started Worker ", common.EnvConfig.WorkerID)
-	go startProcessingTasks()
+	processTasks()
 	listenForHTTPRequests()
 }
