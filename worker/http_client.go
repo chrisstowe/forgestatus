@@ -48,7 +48,7 @@ func getStatus(taskType common.TaskType, workerID int) (string, error) {
 }
 
 func getStatusForAllWorkers(t common.TaskType) []string {
-	results := make([]string, common.EnvConfig.WorkerCount)
+	results := make([]string, 0, common.EnvConfig.WorkerCount)
 	for id := 1; id <= common.EnvConfig.WorkerCount; id++ {
 		var status string
 		var err error
