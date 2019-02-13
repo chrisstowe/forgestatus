@@ -16,6 +16,8 @@ spec:
         image: gcr.io/forgestatus/forgestatus-server:${CIRCLE_SHA1}
         imagePullPolicy: Always
         env:
+        - name: ENV
+          value: "${ENV}"
         - name: PORT
           value: "80"
         - name: REDIS_URL

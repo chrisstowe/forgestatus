@@ -7,6 +7,7 @@ import (
 
 // Config holds required and optional system parameters.
 type Config struct {
+	Env                string
 	Port               string
 	RedisURL           string
 	WorkerID           string
@@ -19,6 +20,7 @@ type Config struct {
 var EnvConfig = newConfig()
 
 func newConfig() Config {
+	env := os.Getenv("ENV")
 	port := os.Getenv("PORT")
 	redisURL := os.Getenv("REDIS_URL")
 	workerID := os.Getenv("WORKER_ID")
@@ -42,6 +44,7 @@ func newConfig() Config {
 	}
 
 	return Config{
+		Env:                env,
 		Port:               port,
 		RedisURL:           redisURL,
 		WorkerID:           workerID,
