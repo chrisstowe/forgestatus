@@ -12,6 +12,7 @@ COPY server ./server
 
 RUN make build-server
 
+# Use alpine for an extra small image.
 FROM alpine
 
 WORKDIR /opt/app

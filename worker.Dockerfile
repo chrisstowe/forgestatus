@@ -12,6 +12,7 @@ COPY worker ./worker
 
 RUN make build-worker
 
+# Use alpine for an extra small image.
 FROM alpine
 
 WORKDIR /opt/app

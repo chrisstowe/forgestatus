@@ -5,7 +5,7 @@ WORKER_NAME := worker
 # Set this var to override the build directory.
 BUILD_DIR ?= build
 
-all: test install
+all: install
 
 get-dep-server:
 	@echo ">> getting $(SERVER_NAME) dependencies"
