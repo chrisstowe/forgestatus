@@ -13,6 +13,7 @@ services:
       context: .
       dockerfile: server.Dockerfile
     environment:
+      - PORT=80
       - REDIS_URL=redis:6379
       - MAX_TASK_QUEUE_SIZE=100
       - MAX_RESULT_QUEUE_SIZE=100
@@ -26,6 +27,7 @@ services:
       context: .
       dockerfile: worker.Dockerfile
     environment:
+      - PORT=80
       - REDIS_URL=redis:6379
       - MAX_TASK_QUEUE_SIZE=100
       - MAX_RESULT_QUEUE_SIZE=100
@@ -40,6 +42,7 @@ services:
       context: .
       dockerfile: worker.Dockerfile
     environment:
+      - PORT=80
       - REDIS_URL=redis:6379
       - MAX_TASK_QUEUE_SIZE=100
       - MAX_RESULT_QUEUE_SIZE=100
