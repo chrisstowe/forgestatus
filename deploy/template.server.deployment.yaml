@@ -15,6 +15,17 @@ spec:
       - name: forgestatus-server-${ENV}
         image: gcr.io/forgestatus/forgestatus-server:${CIRCLE_SHA1}
         imagePullPolicy: Always
+        env:
+        - name: ENV
+          value: "${ENV}"
+        - name: PORT
+          value: "80"
+        - name: REDIS_URL
+          value: "forgestatus-redis-service-${ENV}:6379"
+        - name: MAX_TASK_QUEUE_SIZE
+          value: "100"
+        - name: MAX_RESULT_QUEUE_SIZE
+          value: "100"
         ports:
         - containerPort: 80
         livenessProbe:

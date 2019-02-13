@@ -1,19 +1,25 @@
 FROM golang:1.11-alpine as build-env
 
+# These would normally be factored out into a base build image.
+RUN apk add make
+RUN apk add git
+
 WORKDIR /go/src/github.com/chrisstowe/forgestatus
 
+COPY Makefile .
 COPY common ./common
-COPY forgestatus-worker ./forgestatus-worker
+COPY worker ./worker
 
-RUN go build -o ./goApp ./forgestatus-worker
+RUN make build-worker
 
+# Use alpine for an extra small image.
 FROM alpine
 
 WORKDIR /opt/app
 
-# install app
-COPY --from=build-env /go/src/github.com/chrisstowe/forgestatus/goApp .
+# Install app.
+COPY --from=build-env /go/src/github.com/chrisstowe/forgestatus/build/worker .
 
 EXPOSE 80
 
-ENTRYPOINT [ "./goApp" ]
+ENTRYPOINT [ "./worker" ]

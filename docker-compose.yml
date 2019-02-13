@@ -4,26 +4,70 @@ services:
   redis:
     image: redis:5.0-alpine
     ports:
-      - "3003:6379"
+      - "6379:6379"
 
-  forgestatus-server:
+  server:
     depends_on:
       - redis
     build:
       context: .
       dockerfile: server.Dockerfile
     environment:
+      - ENV=docker
+      - PORT=80
       - REDIS_URL=redis:6379
+      - MAX_TASK_QUEUE_SIZE=100
+      - MAX_RESULT_QUEUE_SIZE=100
     ports:
-      - "3001:80"
+      - "5000:80"
 
-  forgestatus-worker:
+  worker-1:
     depends_on:
       - redis
     build:
       context: .
       dockerfile: worker.Dockerfile
     environment:
+      - ENV=docker
+      - PORT=80
       - REDIS_URL=redis:6379
+      - MAX_TASK_QUEUE_SIZE=100
+      - MAX_RESULT_QUEUE_SIZE=100
+      - WORKER_ID=1
+      - WORKER_COUNT=3
     ports:
-      - "3002:80"
+      - "4001:80"
+
+  worker-2:
+    depends_on:
+      - redis
+    build:
+      context: .
+      dockerfile: worker.Dockerfile
+    environment:
+      - ENV=docker
+      - PORT=80
+      - REDIS_URL=redis:6379
+      - MAX_TASK_QUEUE_SIZE=100
+      - MAX_RESULT_QUEUE_SIZE=100
+      - WORKER_ID=2
+      - WORKER_COUNT=3
+    ports:
+      - "4002:80"
+
+  worker-3:
+    depends_on:
+      - redis
+    build:
+      context: .
+      dockerfile: worker.Dockerfile
+    environment:
+      - ENV=docker
+      - PORT=80
+      - REDIS_URL=redis:6379
+      - MAX_TASK_QUEUE_SIZE=100
+      - MAX_RESULT_QUEUE_SIZE=100
+      - WORKER_ID=3
+      - WORKER_COUNT=3
+    ports:
+      - "4003:80"
