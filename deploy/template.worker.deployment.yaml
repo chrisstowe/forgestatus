@@ -19,7 +19,7 @@ spec:
         - name: REDIS_URL
           value: "http://forgestatus-redis-service-${ENV}:6379"
         - name: WORKER_ID
-          value: "${WORKER_ID}""
+          value: "${WORKER_ID}"
         ports:
         - containerPort: 80
         livenessProbe:
