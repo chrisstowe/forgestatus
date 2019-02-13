@@ -17,9 +17,9 @@ spec:
         imagePullPolicy: Always
         env:
         - name: REDIS_URL
-          value: http://forgestatus-redis-service-${ENV}:6379
+          value: "http://forgestatus-redis-service-${ENV}:6379"
         - name: MAX_TASK_QUEUE_SIZE
-          value: 100
+          value: "100"
         ports:
         - containerPort: 80
         livenessProbe:
