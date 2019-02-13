@@ -16,11 +16,12 @@ type Task struct {
 }
 
 // NewTask creates a new Task.
-func NewTask(t TaskType) *Task {
+func NewTask(t TaskType, data string) *Task {
 	return &Task{
 		Type: t,
 		Time: time.Now().Format(time.RFC3339Nano),
 		ID:   xid.New().String(),
+		Data: data,
 	}
 }
 

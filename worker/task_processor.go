@@ -21,13 +21,17 @@ func getTasks() {
 
 	switch task.Type {
 	case common.GetMemoryUsed:
-		fmt.Println("mem")
+		t := common.NewTask(task.Type, "32.0")
+		taskTaker.SetTaskResult(t)
 	case common.GetCPUUsed:
-		fmt.Println("cpu")
+		t := common.NewTask(task.Type, "13.0")
+		taskTaker.SetTaskResult(t)
 	case common.GetDiskUsed:
-		fmt.Println("disk")
+		t := common.NewTask(task.Type, "19.0")
+		taskTaker.SetTaskResult(t)
 	case common.GetProcsRunning:
-		fmt.Println("procs")
+		t := common.NewTask(task.Type, "3")
+		taskTaker.SetTaskResult(t)
 	default:
 		fmt.Println("Unknown task type")
 	}
