@@ -25,19 +25,9 @@ func scheduledTasks() {
 		fmt.Println("Error scheduling tasks", err)
 		return
 	}
-
-	fmt.Println("done")
-}
-
-func recoverName() {
-	if r := recover(); r != nil {
-		fmt.Println("Recovered from ", r)
-	}
 }
 
 func startSchedulingTasks() {
-	defer recoverName()
-
 	ticker := time.NewTicker(time.Second)
 	for range ticker.C {
 		scheduledTasks()

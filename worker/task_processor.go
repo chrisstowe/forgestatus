@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/chrisstowe/forgestatus/common"
 )
@@ -28,20 +27,9 @@ func getTasks() {
 	default:
 		fmt.Println("unknown task type")
 	}
-
-	// Have the worker backoff
-	time.Sleep(time.Second)
-}
-
-func recoverName() {
-	if r := recover(); r != nil {
-		fmt.Println("Recovered from ", r)
-	}
 }
 
 func startProcessingTasks() {
-	defer recoverName()
-
 	for {
 		getTasks()
 	}

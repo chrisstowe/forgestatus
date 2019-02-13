@@ -1,8 +1,6 @@
 package common
 
 import (
-	"fmt"
-
 	"github.com/go-redis/redis"
 )
 
@@ -28,14 +26,10 @@ func (ts *taskScheduler) ScheduleTask(task *Task) error {
 		return err
 	}
 
-	fmt.Println("serialized")
-
 	err = ts.client.LPush(PendingQueue, s).Err()
 	if err != nil {
 		return err
 	}
-
-	fmt.Println("pushed")
 
 	// Prevent too many tasks from building up.
 	// In a real system, the number of workers should probably be scaled up.
@@ -44,8 +38,6 @@ func (ts *taskScheduler) ScheduleTask(task *Task) error {
 	if err != nil {
 		return err
 	}
-
-	fmt.Println("trimmed")
 
 	return nil
 }
