@@ -6,9 +6,7 @@ import (
 	"github.com/chrisstowe/forgestatus/common"
 )
 
-var taskTaker = common.NewTaskTaker(common.EnvConfig.RedisURL)
-
-func getTasks() {
+func getTasks(taskTaker common.TaskTaker) {
 	fmt.Println("Getting tasks")
 
 	task, err := taskTaker.TakeNextTask()
@@ -30,7 +28,15 @@ func getTasks() {
 }
 
 func startProcessingTasks() {
+	taskTaker := common.NewTaskTaker(common.EnvConfig.RedisURL)
+
+	err := taskTaker.InitTaskTaker()
+	if err != nil {
+		fmt.Println("Could not initialize the task taker", err)
+		return
+	}
+
 	for {
-		getTasks()
+		getTasks(taskTaker)
 	}
 }

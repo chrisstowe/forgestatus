@@ -9,9 +9,7 @@ import (
 	"github.com/chrisstowe/forgestatus/common"
 )
 
-var taskScheduler = common.NewTaskScheduler(common.EnvConfig.RedisURL)
-
-func scheduledTasks() {
+func scheduledTasks(taskScheduler common.TaskScheduler) {
 	fmt.Println("Scheduling tasks")
 
 	task := &common.Task{
@@ -28,8 +26,16 @@ func scheduledTasks() {
 }
 
 func startSchedulingTasks() {
+	taskScheduler := common.NewTaskScheduler(common.EnvConfig.RedisURL)
+
+	err := taskScheduler.InitTaskScheduler()
+	if err != nil {
+		fmt.Println("Could not initialize the task scheduler", err)
+		return
+	}
+
 	ticker := time.NewTicker(time.Second)
 	for range ticker.C {
-		scheduledTasks()
+		scheduledTasks(taskScheduler)
 	}
 }

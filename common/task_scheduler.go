@@ -6,6 +6,7 @@ import (
 
 // TaskScheduler schedules tasks to be worked on.
 type TaskScheduler interface {
+	InitTaskScheduler() error
 	ScheduleTask(*Task) error
 	GetTaskResults() ([]Task, error)
 }
@@ -18,6 +19,16 @@ type taskScheduler struct {
 func NewTaskScheduler(redisURL string) TaskScheduler {
 	c := redis.NewClient(&redis.Options{Addr: redisURL})
 	return &taskScheduler{client: c}
+}
+
+// InitTaskScheduler does the initial configuration of the database.
+func (ts *taskScheduler) InitTaskScheduler() error {
+	err := ts.client.Set(TasksScheduledCounter, 0, 0).Err()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (ts *taskScheduler) ScheduleTask(task *Task) error {
@@ -35,6 +46,12 @@ func (ts *taskScheduler) ScheduleTask(task *Task) error {
 	// In a real system, the number of workers should probably be scaled up.
 	// This is an O(1) operation (since the worst case is always removing 1).
 	err = ts.client.LTrim(PendingQueue, 0, EnvConfig.MaxTaskQueueSize-1).Err()
+	if err != nil {
+		return err
+	}
+
+	// Increment the amount of tasks that have been scheduled.
+	err = ts.client.Incr(TasksScheduledCounter).Err()
 	if err != nil {
 		return err
 	}

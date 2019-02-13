@@ -6,6 +6,7 @@ import (
 
 // TaskTaker takes tasks and sets the results.
 type TaskTaker interface {
+	InitTaskTaker() error
 	TakeNextTask() (*Task, error)
 	SetTaskResult(*Task) error
 }
@@ -18,6 +19,17 @@ type taskTaker struct {
 func NewTaskTaker(redisURL string) TaskTaker {
 	c := redis.NewClient(&redis.Options{Addr: redisURL})
 	return &taskTaker{client: c}
+}
+
+// InitTaskTaker does the initial configuration of the database.
+// This could handle picking up the last in process task after a crash.
+func (tt *taskTaker) InitTaskTaker() error {
+	err := tt.client.Set(TasksProcessedCounter, 0, 0).Err()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (tt *taskTaker) TakeNextTask() (*Task, error) {
@@ -71,6 +83,12 @@ func (tt *taskTaker) SetTaskResult(task *Task) error {
 	// Remove the last task in the processing queue.
 	// LREM could also be used here, but the original task would need passed in.
 	err = tt.client.RPop(ProcessingQueue).Err()
+	if err != nil {
+		return err
+	}
+
+	// Increment the amount of tasks that have been proccessed.
+	err = tt.client.Incr(TasksProcessedCounter).Err()
 	if err != nil {
 		return err
 	}
