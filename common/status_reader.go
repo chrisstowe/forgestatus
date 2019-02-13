@@ -1,6 +1,10 @@
 package common
 
-import "github.com/go-redis/redis"
+import (
+	"strconv"
+
+	"github.com/go-redis/redis"
+)
 
 // StatusReader reads the current status from the database.
 type StatusReader interface {
@@ -41,18 +45,27 @@ func (sr *statusReader) GetStatus() (*Status, error) {
 	// 	return nil, err
 	// }
 
-	// var err error
-	// var tasksProcessed1 string
-	// tasksProcessed := []string{"1"}
-	// processedCounter := TasksProcessedCounterPrefix + "1"
-	// tasksProcessed1, err = sr.client.Get(processedCounter).Result()
-	// if err != nil {
-	// 	return nil, err
-	// }
-	// tasksProcessed[0] = tasksProcessed1
+	var err error
+
+	// The reader does not know how many workers there are.
+	// This is intentional (since workers could scale up or down).
+	// The strategy here is to read from worker counts until failure.
+	// This decoupling could likely happen through persistence in the future.
+	tasksProcessed := make([]string, 0, 10)
+	workerID := 1
+	for {
+		processedCounter := TasksProcessedCounterPrefix + strconv.Itoa(workerID)
+		pc, err := sr.client.Get(processedCounter).Result()
+		if err != nil {
+			break
+		}
+
+		tasksProcessed = append(tasksProcessed, pc)
+		workerID++
+	}
 
 	var tasksScheduled string
-	tasksScheduled, err := sr.client.Get(TasksScheduledCounter).Result()
+	tasksScheduled, err = sr.client.Get(TasksScheduledCounter).Result()
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +75,7 @@ func (sr *statusReader) GetStatus() (*Status, error) {
 		CPUUsed:        []string{"0"},
 		DiskUsed:       []string{"0"},
 		ProcsRunning:   []string{"0"},
-		TasksProcessed: []string{"0"},
+		TasksProcessed: tasksProcessed,
 		TasksScheduled: tasksScheduled,
 	}
 
