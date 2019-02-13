@@ -11,14 +11,7 @@ import (
 
 var taskScheduler = common.NewTaskScheduler(common.EnvConfig.RedisURL)
 
-func recoverName() {
-	if r := recover(); r != nil {
-		fmt.Println("Recovered from ", r)
-	}
-}
-
 func scheduledTasks() {
-	defer recoverName()
 	fmt.Println("Scheduling tasks")
 
 	task := &common.Task{
@@ -30,7 +23,15 @@ func scheduledTasks() {
 	taskScheduler.ScheduleTask(task)
 }
 
+func recoverName() {
+	if r := recover(); r != nil {
+		fmt.Println("Recovered from ", r)
+	}
+}
+
 func startSchedulingTasks() {
+	defer recoverName()
+
 	ticker := time.NewTicker(200 * time.Millisecond)
 	for range ticker.C {
 		scheduledTasks()

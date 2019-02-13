@@ -28,7 +28,15 @@ func getTasks() {
 	}
 }
 
+func recoverName() {
+	if r := recover(); r != nil {
+		fmt.Println("Recovered from ", r)
+	}
+}
+
 func startProcessingTasks() {
+	defer recoverName()
+
 	for {
 		getTasks()
 	}
