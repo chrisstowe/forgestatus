@@ -22,7 +22,7 @@ const (
 	ProcessingQueuePrefix = "processingQueue"
 
 	// ResultQueuePrefix is the prefix for all task result types.
-	ResultQueuePrefix = "result"
+	ResultQueuePrefix = "resultQueue"
 
 	// TasksScheduledCounter is the counter name for the number of scheduled tasks.
 	TasksScheduledCounter = "tasksScheduledCounter"

@@ -21,12 +21,49 @@ func NewStatusReader(redisURL string) StatusReader {
 	return &statusReader{client: c}
 }
 
+func getResults(sr *statusReader, t TaskType) ([]Result, error) {
+	resultQueue := ResultQueuePrefix + string(t)
+
+	// Try and grab the maximum number of results.
+	serializedResults, err := sr.client.LRange(resultQueue,
+		0, EnvConfig.MaxResultQueueSize-1).Result()
+	if err != nil {
+		return nil, err
+	}
+
+	results := make([]Result, 0, len(serializedResults))
+	for _, s := range serializedResults {
+		result, err := DeserializeResult(s)
+		if err != nil {
+			return nil, err
+		}
+
+		results = append(results, *result)
+	}
+
+	return results, nil
+}
+
 func (sr *statusReader) GetStatus() (*Status, error) {
-	// memQueue := ResultQueuePrefix + string(GetMemoryUsed)
-	// memoryUsed, err := sr.client.LRange(memQueue, 0, EnvConfig.MaxResultQueueSize-1).Result()
-	// if err != nil {
-	// 	return nil, err
-	// }
+	memoryUsed, err := getResults(sr, GetMemoryUsed)
+	if err != nil {
+		return nil, err
+	}
+
+	cpuUsed, err := getResults(sr, GetCPUUsed)
+	if err != nil {
+		return nil, err
+	}
+
+	diskUsed, err := getResults(sr, GetDiskUsed)
+	if err != nil {
+		return nil, err
+	}
+
+	procsRunning, err := getResults(sr, GetProcsRunning)
+	if err != nil {
+		return nil, err
+	}
 
 	// The reader does not know how many workers there are.
 	// This is intentional (since workers could scale up or down).
@@ -51,10 +88,10 @@ func (sr *statusReader) GetStatus() (*Status, error) {
 	}
 
 	status := &Status{
-		MemoryUsed:     []Result{},
-		CPUUsed:        []Result{},
-		DiskUsed:       []Result{},
-		ProcsRunning:   []Result{},
+		MemoryUsed:     memoryUsed,
+		CPUUsed:        cpuUsed,
+		DiskUsed:       diskUsed,
+		ProcsRunning:   procsRunning,
 		TasksProcessed: tasksProcessed,
 		TasksScheduled: tasksScheduled,
 	}
