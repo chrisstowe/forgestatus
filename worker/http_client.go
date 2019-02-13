@@ -36,12 +36,19 @@ func getStatus(taskType common.TaskType, workerID int) (string, error) {
 
 func getStatusForAllWorkers(t common.TaskType) []string {
 	results := make([]string, common.EnvConfig.WorkerCount)
-	for i := 0; i < common.EnvConfig.WorkerCount; i++ {
+	for id := 1; id <= common.EnvConfig.WorkerCount; id++ {
+		var status string
+		var err error
 
-		// Failed requests are simply empty values.
-		status, err := getStatus(t, i+1)
-		if err != nil {
-			status = ""
+		// If this is the current worker, then no request is necessary.
+		if id == common.EnvConfig.WorkerID {
+			status = "22.2"
+		} else {
+			// Failed requests are simply empty values.
+			status, err = getStatus(t, id)
+			if err != nil {
+				status = ""
+			}
 		}
 
 		results = append(results, status)
