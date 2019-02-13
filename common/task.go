@@ -1,18 +1,6 @@
 package common
 
-import (
-	"encoding/json"
-)
-
-// PendingQueue is the queue name for pending task work.
-const PendingQueue = "pendingQueue"
-
-// ProcessingQueue is the queue name for tasks currently being processed.
-// This queue is specific to each worker.
-var ProcessingQueue = "processingQueue" + EnvConfig.WorkerID
-
-// ResultQueuePrefix is the prefix for all task result types.
-var ResultQueuePrefix = "result"
+import "encoding/json"
 
 // TaskType represents the type of work to perform.
 type TaskType string
