@@ -6,6 +6,6 @@ import (
 
 func main() {
 	fmt.Println("Started Server")
-	go startSchedulingTasks()
+	scheduleTasks()
 	listenForHTTPRequests()
 }

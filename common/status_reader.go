@@ -41,18 +41,18 @@ func (sr *statusReader) GetStatus() (*Status, error) {
 	// 	return nil, err
 	// }
 
-	var err error
-	var tasksProcessed1 string
-	tasksProcessed := []string{"1"}
-	processedCounter := TasksProcessedCounterPrefix + "1"
-	tasksProcessed1, err = sr.client.Get(processedCounter).Result()
-	if err != nil {
-		return nil, err
-	}
-	tasksProcessed[0] = tasksProcessed1
+	// var err error
+	// var tasksProcessed1 string
+	// tasksProcessed := []string{"1"}
+	// processedCounter := TasksProcessedCounterPrefix + "1"
+	// tasksProcessed1, err = sr.client.Get(processedCounter).Result()
+	// if err != nil {
+	// 	return nil, err
+	// }
+	// tasksProcessed[0] = tasksProcessed1
 
 	var tasksScheduled string
-	tasksScheduled, err = sr.client.Get(TasksScheduledCounter).Result()
+	tasksScheduled, err := sr.client.Get(TasksScheduledCounter).Result()
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +62,7 @@ func (sr *statusReader) GetStatus() (*Status, error) {
 		CPUUsed:        []string{"0"},
 		DiskUsed:       []string{"0"},
 		ProcsRunning:   []string{"0"},
-		TasksProcessed: tasksProcessed,
+		TasksProcessed: []string{"0"},
 		TasksScheduled: tasksScheduled,
 	}
 

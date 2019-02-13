@@ -15,7 +15,7 @@ type taskTaker struct {
 var processingQueue = ProcessingQueuePrefix + EnvConfig.WorkerID
 var tasksProcessedCounter = TasksProcessedCounterPrefix + EnvConfig.WorkerID
 
-// NewTaskTaker creates a new TaskTaker
+// NewTaskTaker creates a new TaskTaker.
 func NewTaskTaker(redisURL string) TaskTaker {
 	c := redis.NewClient(&redis.Options{Addr: redisURL})
 	return &taskTaker{client: c}
