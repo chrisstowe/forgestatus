@@ -21,7 +21,7 @@ func getTasks() {
 
 	status := getStatusForAllWorkers(task.Type)
 
-	fmt.Printf("Got status for %s: %+v\n", task.Type, task)
+	fmt.Printf("Got status for %s: %v\n", task.Type, status)
 
 	result := common.NewResult(task.Type, task.ID, status)
 	taskTaker.SetTaskResult(result)

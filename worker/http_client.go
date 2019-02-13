@@ -11,13 +11,26 @@ import (
 
 var client = http.Client{Timeout: time.Second}
 
-func getStatus(taskType common.TaskType, workerID int) (string, error) {
-	url := fmt.Sprintf(
+func getURL(taskType common.TaskType, workerID int) string {
+	// This is not required, but I did not want to enforce
+	// the same name verbosity that exists in the live system.
+	if common.EnvConfig.Env == "docker" {
+		return fmt.Sprintf(
+			"http://worker-%d/%s",
+			workerID,
+			taskType)
+	}
+
+	return fmt.Sprintf(
 		"http://forgestatus-worker-%d-service-%s/%s",
 		workerID,
 		common.EnvConfig.Env,
 		taskType,
 	)
+}
+
+func getStatus(taskType common.TaskType, workerID int) (string, error) {
+	url := getURL(taskType, workerID)
 
 	resp, err := client.Get(url)
 	if err != nil {
