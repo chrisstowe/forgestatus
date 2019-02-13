@@ -32,7 +32,7 @@ func recoverName() {
 func startSchedulingTasks() {
 	defer recoverName()
 
-	ticker := time.NewTicker(200 * time.Millisecond)
+	ticker := time.NewTicker(time.Second)
 	for range ticker.C {
 		scheduledTasks()
 	}
