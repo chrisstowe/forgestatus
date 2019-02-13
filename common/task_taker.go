@@ -4,7 +4,6 @@ import "github.com/go-redis/redis"
 
 // TaskTaker takes tasks and sets the results.
 type TaskTaker interface {
-	InitTaskTaker() error
 	TakeNextTask() (*Task, error)
 	SetTaskResult(*Task) error
 }
@@ -20,17 +19,6 @@ var tasksProcessedCounter = TasksProcessedCounterPrefix + EnvConfig.WorkerID
 func NewTaskTaker(redisURL string) TaskTaker {
 	c := redis.NewClient(&redis.Options{Addr: redisURL})
 	return &taskTaker{client: c}
-}
-
-// InitTaskTaker does the initial configuration of the database.
-// This could handle picking up the last in process task after a crash.
-func (tt *taskTaker) InitTaskTaker() error {
-	err := tt.client.Set(tasksProcessedCounter, 0, 0).Err()
-	if err != nil {
-		return err
-	}
-
-	return nil
 }
 
 func (tt *taskTaker) TakeNextTask() (*Task, error) {

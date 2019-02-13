@@ -4,7 +4,6 @@ import "github.com/go-redis/redis"
 
 // TaskScheduler schedules tasks to be worked on.
 type TaskScheduler interface {
-	InitTaskScheduler() error
 	ScheduleTask(*Task) error
 }
 
@@ -16,16 +15,6 @@ type taskScheduler struct {
 func NewTaskScheduler(redisURL string) TaskScheduler {
 	c := redis.NewClient(&redis.Options{Addr: redisURL})
 	return &taskScheduler{client: c}
-}
-
-// InitTaskScheduler does the initial configuration of the database.
-func (ts *taskScheduler) InitTaskScheduler() error {
-	err := ts.client.Set(TasksScheduledCounter, 0, 0).Err()
-	if err != nil {
-		return err
-	}
-
-	return nil
 }
 
 func (ts *taskScheduler) ScheduleTask(task *Task) error {
