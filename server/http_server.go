@@ -8,6 +8,8 @@ import (
 	"github.com/chrisstowe/forgestatus/common"
 )
 
+var statusReader = common.NewStatusReader(common.EnvConfig.RedisURL)
+
 func timeHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Time: %s", time.Now())
 }
@@ -17,27 +19,20 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func statusHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("ok"))
+	status, err := statusReader.GetStatus()
+	if err != nil {
+		http.Error(w, "Problem reading status",
+			http.StatusInternalServerError)
+	}
+
+	s, err := common.SerializeStatus(status)
+	if err != nil {
+		http.Error(w, "Problem serializing status",
+			http.StatusInternalServerError)
+	}
+
+	w.Write([]byte(s))
 }
-
-// func getWorkerStatus(w http.ResponseWriter, r *http.Request) {
-// 	resp, err := http.Get("http://forgestatus-worker-1-service-dev/getStatus")
-// 	if err != nil {
-// 		w.WriteHeader(http.StatusInternalServerError)
-// 		w.Write([]byte("Could not connect to the worker!"))
-// 		return
-// 	}
-
-// 	defer resp.Body.Close()
-
-// 	body, err := ioutil.ReadAll(resp.Body)
-// 	if err != nil {
-// 		http.Error(w, err.Error(), http.StatusInternalServerError)
-// 		return
-// 	}
-
-// 	w.Write(body)
-// }
 
 func listenForHTTPRequests() {
 	http.HandleFunc("/", timeHandler)
