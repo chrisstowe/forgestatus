@@ -51,10 +51,10 @@ func (sr *statusReader) GetStatus() (*Status, error) {
 	}
 
 	status := &Status{
-		MemoryUsed:     []string{"0"},
-		CPUUsed:        []string{"0"},
-		DiskUsed:       []string{"0"},
-		ProcsRunning:   []string{"0"},
+		MemoryUsed:     []Result{},
+		CPUUsed:        []Result{},
+		DiskUsed:       []Result{},
+		ProcsRunning:   []Result{},
 		TasksProcessed: tasksProcessed,
 		TasksScheduled: tasksScheduled,
 	}

@@ -4,10 +4,10 @@ import "encoding/json"
 
 // Status represents an aggregation of the cluster status.
 type Status struct {
-	MemoryUsed     []string `json:"memoryUsed"`
-	CPUUsed        []string `json:"cpuUsed"`
-	DiskUsed       []string `json:"diskUsed"`
-	ProcsRunning   []string `json:"procsRunning"`
+	MemoryUsed     []Result `json:"memoryUsed"`
+	CPUUsed        []Result `json:"cpuUsed"`
+	DiskUsed       []Result `json:"diskUsed"`
+	ProcsRunning   []Result `json:"procsRunning"`
 	TasksProcessed []string `json:"tasksProcessed"`
 	TasksScheduled string   `json:"tasksScheduled"`
 }
