@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [ ${CIRCLE_BRANCH} = 'master' ]; then
     export ENV=prod
 else
@@ -11,8 +13,8 @@ mkdir config
 envsubst < ./deploy/template.server.deployment.yaml > ./config/server.deployment.yaml
 envsubst < ./deploy/template.server.service.yaml > ./config/server.service.yaml
 
-export WORKER_COUNT=3
-for i in {1..${WORKER_COUNT}}
+export WORKER_COUNT=4
+for i in $( seq 1 $WORKER_COUNT )
 do
     export WORKER_ID=${i}
     envsubst < ./deploy/template.worker.deployment.yaml > ./config/worker.${WORKER_ID}.deployment.yaml
