@@ -2,19 +2,6 @@ package common
 
 import "encoding/json"
 
-// TaskType represents the type of work to perform.
-type TaskType string
-
-// Enumerated TaskTypes.
-const (
-	GetMemoryUsed        TaskType = "GetMemoryUsed"
-	GetCPUUsed           TaskType = "GetCPUUsed"
-	GetDiskUsed          TaskType = "GetDiskUsed"
-	GetProcsRunning      TaskType = "GetProcsRunning"
-	GetRequestsProcessed TaskType = "GetRequestsProcessed"
-	GetRequestsMade      TaskType = "GetRequestsMade"
-)
-
 // Task represents work to be done.
 type Task struct {
 	Type TaskType `json:"type"`
@@ -34,7 +21,7 @@ func DeserializeTask(s string) (*Task, error) {
 	return task, nil
 }
 
-// SerializeTask tasks a task and converts it to a JSON string.
+// SerializeTask takes a task and converts it to a JSON string.
 func SerializeTask(task *Task) (string, error) {
 	b, err := json.Marshal(task)
 	if err != nil {

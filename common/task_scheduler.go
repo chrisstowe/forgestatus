@@ -1,14 +1,11 @@
 package common
 
-import (
-	"github.com/go-redis/redis"
-)
+import "github.com/go-redis/redis"
 
 // TaskScheduler schedules tasks to be worked on.
 type TaskScheduler interface {
 	InitTaskScheduler() error
 	ScheduleTask(*Task) error
-	GetTaskResults() ([]Task, error)
 }
 
 type taskScheduler struct {
@@ -57,8 +54,4 @@ func (ts *taskScheduler) ScheduleTask(task *Task) error {
 	}
 
 	return nil
-}
-
-func (ts *taskScheduler) GetTaskResults() ([]Task, error) {
-	return nil, nil
 }

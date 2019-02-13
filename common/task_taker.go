@@ -1,8 +1,6 @@
 package common
 
-import (
-	"github.com/go-redis/redis"
-)
+import "github.com/go-redis/redis"
 
 // TaskTaker takes tasks and sets the results.
 type TaskTaker interface {
@@ -15,6 +13,9 @@ type taskTaker struct {
 	client *redis.Client
 }
 
+var processingQueue = ProcessingQueuePrefix + EnvConfig.WorkerID
+var tasksProcessedCounter = TasksProcessedCounterPrefix + EnvConfig.WorkerID
+
 // NewTaskTaker creates a new TaskTaker
 func NewTaskTaker(redisURL string) TaskTaker {
 	c := redis.NewClient(&redis.Options{Addr: redisURL})
@@ -24,7 +25,7 @@ func NewTaskTaker(redisURL string) TaskTaker {
 // InitTaskTaker does the initial configuration of the database.
 // This could handle picking up the last in process task after a crash.
 func (tt *taskTaker) InitTaskTaker() error {
-	err := tt.client.Set(TasksProcessedCounter, 0, 0).Err()
+	err := tt.client.Set(tasksProcessedCounter, 0, 0).Err()
 	if err != nil {
 		return err
 	}
@@ -35,7 +36,7 @@ func (tt *taskTaker) InitTaskTaker() error {
 func (tt *taskTaker) TakeNextTask() (*Task, error) {
 	// Move a task from the pending queue into a processing one.
 	// This is an atomic operation, so no data is lost.
-	result, err := tt.client.BRPopLPush(PendingQueue, ProcessingQueue, 0).Result()
+	result, err := tt.client.BRPopLPush(PendingQueue, processingQueue, 0).Result()
 	if err != nil {
 		return nil, err
 	}
@@ -44,7 +45,7 @@ func (tt *taskTaker) TakeNextTask() (*Task, error) {
 	// This is an arbitrary limitation that can be improved later.
 	// There is also no process for pushing stale tasks back into the pending queue.
 	// This is an O(1) operation (since the worst case is always removing 1).
-	err = tt.client.LTrim(ProcessingQueue, 0, 0).Err()
+	err = tt.client.LTrim(processingQueue, 0, 0).Err()
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +66,6 @@ func (tt *taskTaker) SetTaskResult(task *Task) error {
 
 	// Push to the queue related to the task type.
 	resultQueue := ResultQueuePrefix + string(task.Type)
-
 	err = tt.client.LPush(resultQueue, s).Err()
 	if err != nil {
 		return err
@@ -82,13 +82,13 @@ func (tt *taskTaker) SetTaskResult(task *Task) error {
 	// This is an arbitrary limitation that can be improved later.
 	// Remove the last task in the processing queue.
 	// LREM could also be used here, but the original task would need passed in.
-	err = tt.client.RPop(ProcessingQueue).Err()
+	err = tt.client.RPop(processingQueue).Err()
 	if err != nil {
 		return err
 	}
 
 	// Increment the amount of tasks that have been proccessed.
-	err = tt.client.Incr(TasksProcessedCounter).Err()
+	err = tt.client.Incr(tasksProcessedCounter).Err()
 	if err != nil {
 		return err
 	}
