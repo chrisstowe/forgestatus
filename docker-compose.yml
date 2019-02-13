@@ -49,3 +49,18 @@ services:
       - WORKER_ID=2
     ports:
       - "4002:80"
+
+  worker-3:
+    depends_on:
+      - redis
+    build:
+      context: .
+      dockerfile: worker.Dockerfile
+    environment:
+      - PORT=80
+      - REDIS_URL=redis:6379
+      - MAX_TASK_QUEUE_SIZE=100
+      - MAX_RESULT_QUEUE_SIZE=100
+      - WORKER_ID=3
+    ports:
+      - "4003:80"
