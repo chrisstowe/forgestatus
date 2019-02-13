@@ -24,8 +24,8 @@ func DeserializeStatus(s string) (*Status, error) {
 }
 
 // SerializeStatus takes a status and converts it to a JSON string.
-func SerializeStatus(status *Status) (string, error) {
-	b, err := json.Marshal(status)
+func SerializeStatus(s *Status) (string, error) {
+	b, err := json.Marshal(s)
 	if err != nil {
 		return "", err
 	}

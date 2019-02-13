@@ -12,7 +12,7 @@ var taskScheduler = common.NewTaskScheduler(common.EnvConfig.RedisURL)
 func scheduleTask(t common.TaskType) {
 	fmt.Println("Scheduling task: ", t)
 
-	task := common.NewTask(t, "")
+	task := common.NewTask(t)
 
 	err := taskScheduler.ScheduleTask(task)
 	if err != nil {

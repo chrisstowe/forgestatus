@@ -12,16 +12,14 @@ type Task struct {
 	Type TaskType `json:"type"`
 	Time string   `json:"time"`
 	ID   string   `json:"id"`
-	Data string   `json:"data"`
 }
 
 // NewTask creates a new Task.
-func NewTask(t TaskType, data string) *Task {
+func NewTask(t TaskType) *Task {
 	return &Task{
 		Type: t,
 		Time: time.Now().Format(time.RFC3339Nano),
 		ID:   xid.New().String(),
-		Data: data,
 	}
 }
 

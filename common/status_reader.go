@@ -22,30 +22,11 @@ func NewStatusReader(redisURL string) StatusReader {
 }
 
 func (sr *statusReader) GetStatus() (*Status, error) {
-	// s, err := SerializeTask(task)
+	// memQueue := ResultQueuePrefix + string(GetMemoryUsed)
+	// memoryUsed, err := sr.client.LRange(memQueue, 0, EnvConfig.MaxResultQueueSize-1).Result()
 	// if err != nil {
 	// 	return nil, err
 	// }
-
-	// err = ts.client.LPush(PendingQueue, s).Err()
-	// if err != nil {
-	// 	return nil, err
-	// }
-
-	// // Prevent too many tasks from building up.
-	// // In a real system, the number of workers should probably be scaled up.
-	// // This is an O(1) operation (since the worst case is always removing 1).
-	// err = ts.client.LTrim(PendingQueue, 0, EnvConfig.MaxTaskQueueSize-1).Err()
-	// if err != nil {
-	// 	return nil, err
-	// }
-
-	// task, err := DeserializeTask(result)
-	// if err != nil {
-	// 	return nil, err
-	// }
-
-	var err error
 
 	// The reader does not know how many workers there are.
 	// This is intentional (since workers could scale up or down).
@@ -64,8 +45,7 @@ func (sr *statusReader) GetStatus() (*Status, error) {
 		workerID++
 	}
 
-	var tasksScheduled string
-	tasksScheduled, err = sr.client.Get(TasksScheduledCounter).Result()
+	tasksScheduled, err := sr.client.Get(TasksScheduledCounter).Result()
 	if err != nil {
 		return nil, err
 	}

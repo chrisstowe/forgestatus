@@ -5,7 +5,7 @@ import "github.com/go-redis/redis"
 // TaskTaker takes tasks and sets the results.
 type TaskTaker interface {
 	TakeNextTask() (*Task, error)
-	SetTaskResult(*Task) error
+	SetTaskResult(*Result) error
 }
 
 type taskTaker struct {
@@ -46,14 +46,14 @@ func (tt *taskTaker) TakeNextTask() (*Task, error) {
 	return task, nil
 }
 
-func (tt *taskTaker) SetTaskResult(task *Task) error {
-	s, err := SerializeTask(task)
+func (tt *taskTaker) SetTaskResult(result *Result) error {
+	s, err := SerializeResult(result)
 	if err != nil {
 		return err
 	}
 
 	// Push to the queue related to the task type.
-	resultQueue := ResultQueuePrefix + string(task.Type)
+	resultQueue := ResultQueuePrefix + string(result.Type)
 	err = tt.client.LPush(resultQueue, s).Err()
 	if err != nil {
 		return err
