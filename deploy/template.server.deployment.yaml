@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: forgestatus-server
-namespace: ${ENV}
+  namespace: ${ENV}
 spec:
   replicas: 1
   strategy:
