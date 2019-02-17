@@ -7,7 +7,7 @@ spec:
   type: ClusterIP
   selector:
     app: forgestatus-worker
-    workerId: ${WORKER_ID}
+    workerId: "${WORKER_ID}"
   ports:
   - protocol: TCP
     port: 80

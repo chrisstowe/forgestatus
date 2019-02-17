@@ -11,7 +11,7 @@ spec:
     metadata:
       labels:
         app: forgestatus-worker
-        workerId: ${WORKER_ID}
+        workerId: "${WORKER_ID}"
     spec:
       containers:
       - name: forgestatus-worker-${WORKER_ID}
