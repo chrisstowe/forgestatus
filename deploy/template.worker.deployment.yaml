@@ -9,7 +9,9 @@ spec:
   template:
     metadata:
       labels:
-        app: forgestatus-worker-${WORKER_ID}-${ENV}
+        app: forgestatus-worker
+        env: ${ENV}
+        workerId: ${WORKER_ID}
     spec:
       containers:
       - name: forgestatus-worker-${WORKER_ID}-${ENV}

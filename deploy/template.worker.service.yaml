@@ -5,7 +5,9 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: forgestatus-worker-${WORKER_ID}-${ENV}
+    app: forgestatus-worker
+    env: ${ENV}
+    workerId: ${WORKER_ID}
   ports:
   - protocol: TCP
     port: 80

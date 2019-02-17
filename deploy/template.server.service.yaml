@@ -5,7 +5,8 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app: forgestatus-server-${ENV}
+    app: forgestatus-server
+    env: ${ENV}
   ports:
   - protocol: TCP
     port: 80

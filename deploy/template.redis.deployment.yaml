@@ -9,7 +9,8 @@ spec:
   template:
     metadata:
       labels:
-        app: forgestatus-redis-${ENV}
+        app: forgestatus-redis
+        env: ${ENV}
     spec:
       containers:
       - name: forgestatus-redis-${ENV}
