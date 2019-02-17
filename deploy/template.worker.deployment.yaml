@@ -11,6 +11,8 @@ spec:
       labels:
         app: forgestatus-worker-${WORKER_ID}-${ENV}
     spec:
+      securityContext:
+        readOnlyRootFilesystem: true
       containers:
       - name: forgestatus-worker-${WORKER_ID}-${ENV}
         image: gcr.io/forgestatus/forgestatus-worker:${CIRCLE_SHA1}

@@ -11,6 +11,8 @@ spec:
       labels:
         app: forgestatus-server-${ENV}
     spec:
+      securityContext:
+        readOnlyRootFilesystem: true
       containers:
       - name: forgestatus-server-${ENV}
         image: gcr.io/forgestatus/forgestatus-server:${CIRCLE_SHA1}
