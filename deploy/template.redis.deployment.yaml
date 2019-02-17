@@ -18,6 +18,10 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 6379
+        resources:
+          limits:
+            memory: "3Gi"
+            cpu: 0.3
         livenessProbe:
           exec:
             command:

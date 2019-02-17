@@ -34,6 +34,10 @@ spec:
           value: "${WORKER_COUNT}"
         ports:
         - containerPort: 80
+        resources:
+          limits:
+            memory: "0.3Gi"
+            cpu: 0.15
         livenessProbe:
           httpGet:
             path: /health
