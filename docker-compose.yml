@@ -16,8 +16,7 @@ services:
       - ENV=docker
       - PORT=80
       - REDIS_URL=redis:6379
-      - MAX_TASK_QUEUE_SIZE=100
-      - MAX_RESULT_QUEUE_SIZE=100
+      - MAX_TASK_QUEUE_SIZE=150
     ports:
       - "5000:80"
 
@@ -31,8 +30,7 @@ services:
       - ENV=docker
       - PORT=80
       - REDIS_URL=redis:6379
-      - MAX_TASK_QUEUE_SIZE=100
-      - MAX_RESULT_QUEUE_SIZE=100
+      - MAX_RESULT_QUEUE_SIZE=300
       - WORKER_ID=1
       - WORKER_COUNT=3
     ports:
@@ -48,8 +46,7 @@ services:
       - ENV=docker
       - PORT=80
       - REDIS_URL=redis:6379
-      - MAX_TASK_QUEUE_SIZE=100
-      - MAX_RESULT_QUEUE_SIZE=100
+      - MAX_RESULT_QUEUE_SIZE=300
       - WORKER_ID=2
       - WORKER_COUNT=3
     ports:
@@ -65,8 +62,7 @@ services:
       - ENV=docker
       - PORT=80
       - REDIS_URL=redis:6379
-      - MAX_TASK_QUEUE_SIZE=100
-      - MAX_RESULT_QUEUE_SIZE=100
+      - MAX_RESULT_QUEUE_SIZE=300
       - WORKER_ID=3
       - WORKER_COUNT=3
     ports:

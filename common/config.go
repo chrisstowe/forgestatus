@@ -39,13 +39,13 @@ func newConfig() Config {
 	mt := os.Getenv("MAX_TASK_QUEUE_SIZE")
 	maxTaskQueueSize, err := strconv.ParseInt(mt, 10, 64)
 	if err != nil || maxTaskQueueSize < 1 {
-		maxTaskQueueSize = 300
+		maxTaskQueueSize = 150
 	}
 
 	mr := os.Getenv("MAX_RESULT_QUEUE_SIZE")
 	maxResultQueueSize, err := strconv.ParseInt(mr, 10, 64)
 	if err != nil || maxResultQueueSize < 1 {
-		maxResultQueueSize = 500
+		maxResultQueueSize = 300
 	}
 
 	return Config{
