@@ -45,22 +45,7 @@ func getResults(sr *statusReader, t TaskType) ([]Result, error) {
 }
 
 func (sr *statusReader) GetStatus() (*Status, error) {
-	memoryUsed, err := getResults(sr, GetMemoryUsed)
-	if err != nil {
-		return nil, err
-	}
-
-	cpuUsed, err := getResults(sr, GetCPUUsed)
-	if err != nil {
-		return nil, err
-	}
-
-	diskUsed, err := getResults(sr, GetDiskUsed)
-	if err != nil {
-		return nil, err
-	}
-
-	procsRunning, err := getResults(sr, GetProcsRunning)
+	tasksScheduled, err := sr.client.Get(TasksScheduledCounter).Result()
 	if err != nil {
 		return nil, err
 	}
@@ -82,18 +67,57 @@ func (sr *statusReader) GetStatus() (*Status, error) {
 		workerID++
 	}
 
-	tasksScheduled, err := sr.client.Get(TasksScheduledCounter).Result()
+	healthy, err := getResults(sr, GetHealthy)
+	if err != nil {
+		return nil, err
+	}
+
+	ready, err := getResults(sr, GetReady)
+	if err != nil {
+		return nil, err
+	}
+
+	memoryUsed, err := getResults(sr, GetMemoryUsed)
+	if err != nil {
+		return nil, err
+	}
+
+	cpuUsed, err := getResults(sr, GetCPUUsed)
+	if err != nil {
+		return nil, err
+	}
+
+	diskUsed, err := getResults(sr, GetDiskUsed)
+	if err != nil {
+		return nil, err
+	}
+
+	procsRunning, err := getResults(sr, GetProcsRunning)
+	if err != nil {
+		return nil, err
+	}
+
+	diskIO, err := getResults(sr, GetDiskIO)
+	if err != nil {
+		return nil, err
+	}
+
+	networkTraffic, err := getResults(sr, GetNetworkTraffic)
 	if err != nil {
 		return nil, err
 	}
 
 	status := &Status{
+		TasksScheduled: tasksScheduled,
+		TasksProcessed: tasksProcessed,
+		Healthy:        healthy,
+		Ready:          ready,
 		MemoryUsed:     memoryUsed,
 		CPUUsed:        cpuUsed,
 		DiskUsed:       diskUsed,
 		ProcsRunning:   procsRunning,
-		TasksProcessed: tasksProcessed,
-		TasksScheduled: tasksScheduled,
+		DiskIO:         diskIO,
+		NetworkTraffic: networkTraffic,
 	}
 
 	return status, nil

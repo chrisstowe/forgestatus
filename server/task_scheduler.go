@@ -21,8 +21,12 @@ func scheduleTask(t common.TaskType) {
 }
 
 func scheduleTasks() {
+	common.Schedule(func() { scheduleTask(common.GetHealthy) }, 500*time.Millisecond)
+	common.Schedule(func() { scheduleTask(common.GetReady) }, 500*time.Millisecond)
 	common.Schedule(func() { scheduleTask(common.GetMemoryUsed) }, time.Second)
 	common.Schedule(func() { scheduleTask(common.GetCPUUsed) }, time.Second)
 	common.Schedule(func() { scheduleTask(common.GetDiskUsed) }, time.Second)
 	common.Schedule(func() { scheduleTask(common.GetProcsRunning) }, time.Second)
+	common.Schedule(func() { scheduleTask(common.GetDiskIO) }, 2*time.Second)
+	common.Schedule(func() { scheduleTask(common.GetNetworkTraffic) }, 2*time.Second)
 }

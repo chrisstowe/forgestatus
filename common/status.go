@@ -4,12 +4,16 @@ import "encoding/json"
 
 // Status represents an aggregation of the cluster status.
 type Status struct {
+	TasksScheduled string   `json:"tasksScheduled"`
+	TasksProcessed []string `json:"tasksProcessed"`
+	Healthy        []Result `json:"healthy"`
+	Ready          []Result `json:"ready"`
 	MemoryUsed     []Result `json:"memoryUsed"`
 	CPUUsed        []Result `json:"cpuUsed"`
 	DiskUsed       []Result `json:"diskUsed"`
 	ProcsRunning   []Result `json:"procsRunning"`
-	TasksProcessed []string `json:"tasksProcessed"`
-	TasksScheduled string   `json:"tasksScheduled"`
+	DiskIO         []Result `json:"diskIO"`
+	NetworkTraffic []Result `json:"networkTraffic"`
 }
 
 // DeserializeStatus takes a JSON string and converts it to a status.

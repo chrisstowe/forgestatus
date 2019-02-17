@@ -9,7 +9,7 @@ import (
 )
 
 func timeHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Time: %s", time.Now())
+	fmt.Fprintf(w, "time: %s", time.Now())
 }
 
 func healthyHandler(w http.ResponseWriter, r *http.Request) {
@@ -20,29 +20,32 @@ func readyHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("ready"))
 }
 
-func getMemoryUsedHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte(common.MockSystemMetric(80)))
+func mockHealthyReadyHandler() func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte(common.MockHealthyReady()))
+	}
 }
 
-func getCPUUsedHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte(common.MockSystemMetric(50)))
-}
-
-func getDiskUsedHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte(common.MockSystemMetric(20)))
-}
-
-func getProcsRunningHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte(common.MockSystemMetric(100)))
+func mockSystemValueHandler(maxValue int) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte(common.MockSystemValue(maxValue)))
+	}
 }
 
 func listenForHTTPRequests() {
 	http.HandleFunc("/", timeHandler)
 	http.HandleFunc("/status/healthy", healthyHandler)
 	http.HandleFunc("/status/ready", readyHandler)
-	http.HandleFunc("/GetMemoryUsed", getMemoryUsedHandler)
-	http.HandleFunc("/GetCPUUsed", getCPUUsedHandler)
-	http.HandleFunc("/GetDiskUsed", getDiskUsedHandler)
-	http.HandleFunc("/GetProcsRunning", getProcsRunningHandler)
+
+	// Simulated system metrics.
+	http.HandleFunc("/GetHealthy", mockHealthyReadyHandler())
+	http.HandleFunc("/GetReady", mockHealthyReadyHandler())
+	http.HandleFunc("/GetMemoryUsed", mockSystemValueHandler(75))
+	http.HandleFunc("/GetCPUUsed", mockSystemValueHandler(50))
+	http.HandleFunc("/GetDiskUsed", mockSystemValueHandler(25))
+	http.HandleFunc("/GetProcsRunning", mockSystemValueHandler(20))
+	http.HandleFunc("/GetGetDiskIO", mockSystemValueHandler(1000))
+	http.HandleFunc("/GetNetworkTraffic", mockSystemValueHandler(500))
+
 	http.ListenAndServe(":"+common.EnvConfig.Port, nil)
 }

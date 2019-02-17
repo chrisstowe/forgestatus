@@ -11,7 +11,7 @@ import (
 var statusReader = common.NewStatusReader(common.EnvConfig.RedisURL)
 
 func timeHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Time: %s", time.Now())
+	fmt.Fprintf(w, "time: %s", time.Now())
 }
 
 func healthyHandler(w http.ResponseWriter, r *http.Request) {
