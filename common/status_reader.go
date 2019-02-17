@@ -67,6 +67,16 @@ func (sr *statusReader) GetStatus() (*Status, error) {
 		workerID++
 	}
 
+	healthy, err := getResults(sr, GetHealthy)
+	if err != nil {
+		return nil, err
+	}
+
+	ready, err := getResults(sr, GetReady)
+	if err != nil {
+		return nil, err
+	}
+
 	memoryUsed, err := getResults(sr, GetMemoryUsed)
 	if err != nil {
 		return nil, err
@@ -100,6 +110,8 @@ func (sr *statusReader) GetStatus() (*Status, error) {
 	status := &Status{
 		TasksScheduled: tasksScheduled,
 		TasksProcessed: tasksProcessed,
+		Healthy:        healthy,
+		Ready:          ready,
 		MemoryUsed:     memoryUsed,
 		CPUUsed:        cpuUsed,
 		DiskUsed:       diskUsed,
