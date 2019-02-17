@@ -19,11 +19,8 @@ RUN make build-worker
 # Only specify commands here needed for running the app.
 FROM alpine
 
-# Set the work dir and user for better security.
+# Set the dir/user for better security.
 WORKDIR /opt/app
-RUN addgroup -S appgroup && \
-    adduser -S appuser -G appgroup
-USER appuser
 
 # Install the built app.
 COPY --from=build-env /go/src/github.com/chrisstowe/forgestatus/build/worker .
