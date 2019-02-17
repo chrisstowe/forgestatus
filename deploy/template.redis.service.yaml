@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: forgestatus-redis-service-${ENV}
+  name: forgestatus-redis-service
+  namespace: ${ENV}
 spec:
   type: ClusterIP
   selector:
-    app: forgestatus-redis-${ENV}
+    app: forgestatus-redis
   ports:
   - protocol: TCP
     port: 6379

@@ -1,7 +1,8 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: forgestatus-redis-${ENV}
+  name: forgestatus-redis
+  namespace: ${ENV}
 spec:
   replicas: 1
   strategy:
@@ -9,14 +10,21 @@ spec:
   template:
     metadata:
       labels:
-        app: forgestatus-redis-${ENV}
+        app: forgestatus-redis
     spec:
       containers:
-      - name: forgestatus-redis-${ENV}
+      - name: forgestatus-redis
         image: redis:5.0-alpine
         imagePullPolicy: Always
         ports:
         - containerPort: 6379
+        resources:
+          requests:
+            memory: "1.5Gi"
+            cpu: 0.15
+          limits:
+            memory: "3Gi"
+            cpu: 0.3
         livenessProbe:
           exec:
             command:

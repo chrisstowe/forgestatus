@@ -18,13 +18,13 @@ func getURL(taskType common.TaskType, workerID int) string {
 		return fmt.Sprintf(
 			"http://worker-%d/%s",
 			workerID,
-			taskType)
+			taskType,
+		)
 	}
 
 	return fmt.Sprintf(
-		"http://forgestatus-worker-%d-service-%s/%s",
+		"http://forgestatus-worker-%d-service/%s",
 		workerID,
-		common.EnvConfig.Env,
 		taskType,
 	)
 }
