@@ -5,12 +5,12 @@ type TaskType string
 
 // Enumerated TaskTypes.
 const (
-	GetMemoryUsed        TaskType = "GetMemoryUsed"
-	GetCPUUsed           TaskType = "GetCPUUsed"
-	GetDiskUsed          TaskType = "GetDiskUsed"
-	GetProcsRunning      TaskType = "GetProcsRunning"
-	GetRequestsProcessed TaskType = "GetRequestsProcessed"
-	GetRequestsMade      TaskType = "GetRequestsMade"
+	GetMemoryUsed     TaskType = "GetMemoryUsed"
+	GetCPUUsed        TaskType = "GetCPUUsed"
+	GetDiskUsed       TaskType = "GetDiskUsed"
+	GetProcsRunning   TaskType = "GetProcsRunning"
+	GetDiskIO         TaskType = "GetDiskIO"
+	GetNetworkTraffic TaskType = "GetNetworkTraffic"
 )
 
 const (

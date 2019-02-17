@@ -9,7 +9,7 @@ import (
 )
 
 func timeHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Time: %s", time.Now())
+	fmt.Fprintf(w, "time: %s", time.Now())
 }
 
 func healthyHandler(w http.ResponseWriter, r *http.Request) {
@@ -20,29 +20,21 @@ func readyHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("ready"))
 }
 
-func getMemoryUsedHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte(common.MockSystemMetric(80)))
-}
-
-func getCPUUsedHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte(common.MockSystemMetric(50)))
-}
-
-func getDiskUsedHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte(common.MockSystemMetric(20)))
-}
-
-func getProcsRunningHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte(common.MockSystemMetric(100)))
+func mockResponseHandler(maxValue int) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte(common.MockSystemMetric(maxValue)))
+	}
 }
 
 func listenForHTTPRequests() {
 	http.HandleFunc("/", timeHandler)
 	http.HandleFunc("/status/healthy", healthyHandler)
 	http.HandleFunc("/status/ready", readyHandler)
-	http.HandleFunc("/GetMemoryUsed", getMemoryUsedHandler)
-	http.HandleFunc("/GetCPUUsed", getCPUUsedHandler)
-	http.HandleFunc("/GetDiskUsed", getDiskUsedHandler)
-	http.HandleFunc("/GetProcsRunning", getProcsRunningHandler)
+	http.HandleFunc("/GetMemoryUsed", mockResponseHandler(75))
+	http.HandleFunc("/GetCPUUsed", mockResponseHandler(50))
+	http.HandleFunc("/GetDiskUsed", mockResponseHandler(25))
+	http.HandleFunc("/GetProcsRunning", mockResponseHandler(20))
+	http.HandleFunc("/GetGetDiskIO", mockResponseHandler(1000))
+	http.HandleFunc("/GetNetworkTraffic", mockResponseHandler(500))
 	http.ListenAndServe(":"+common.EnvConfig.Port, nil)
 }

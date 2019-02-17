@@ -25,4 +25,6 @@ func scheduleTasks() {
 	common.Schedule(func() { scheduleTask(common.GetCPUUsed) }, time.Second)
 	common.Schedule(func() { scheduleTask(common.GetDiskUsed) }, time.Second)
 	common.Schedule(func() { scheduleTask(common.GetProcsRunning) }, time.Second)
+	common.Schedule(func() { scheduleTask(common.GetDiskIO) }, 2*time.Second)
+	common.Schedule(func() { scheduleTask(common.GetNetworkTraffic) }, 2*time.Second)
 }
