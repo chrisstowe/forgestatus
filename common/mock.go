@@ -12,7 +12,7 @@ const (
 
 // MockHealthyReady returns a simulated healthy/ready status.
 func MockHealthyReady() string {
-	return strconv.FormatBool(rand.Intn(1) == 0)
+	return strconv.FormatBool(rand.Intn(15) > 0)
 }
 
 // MockSystemValue returns a simulated system value.
