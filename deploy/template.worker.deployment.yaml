@@ -5,8 +5,6 @@ metadata:
   namespace: ${ENV}
 spec:
   replicas: 1
-  strategy:
-    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -43,13 +41,13 @@ spec:
             cpu: 0.15
         livenessProbe:
           httpGet:
-            path: /health
+            path: /status/healthy
             port: 80
           initialDelaySeconds: 20
           periodSeconds: 10
         readinessProbe:
           httpGet:
-            path: /health
+            path: /status/ready
             port: 80
           initialDelaySeconds: 20
           periodSeconds: 10

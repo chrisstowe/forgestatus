@@ -12,8 +12,12 @@ func timeHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Time: %s", time.Now())
 }
 
-func healthHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("ok"))
+func healthyHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("healthy"))
+}
+
+func readyHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("ready"))
 }
 
 func getMemoryUsedHandler(w http.ResponseWriter, r *http.Request) {
@@ -34,7 +38,8 @@ func getProcsRunningHandler(w http.ResponseWriter, r *http.Request) {
 
 func listenForHTTPRequests() {
 	http.HandleFunc("/", timeHandler)
-	http.HandleFunc("/health", healthHandler)
+	http.HandleFunc("/status/healthy", healthyHandler)
+	http.HandleFunc("/status/ready", readyHandler)
 	http.HandleFunc("/GetMemoryUsed", getMemoryUsedHandler)
 	http.HandleFunc("/GetCPUUsed", getCPUUsedHandler)
 	http.HandleFunc("/GetDiskUsed", getDiskUsedHandler)
