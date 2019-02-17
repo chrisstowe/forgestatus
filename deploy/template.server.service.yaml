@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: forgestatus-server-service-${ENV}
+  name: forgestatus-server-service
+namespace: ${ENV}
 spec:
   type: NodePort
   selector:
     app: forgestatus-server
-    env: ${ENV}
   ports:
   - protocol: TCP
     port: 80

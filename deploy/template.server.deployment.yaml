@@ -1,7 +1,8 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: forgestatus-server-${ENV}
+  name: forgestatus-server
+namespace: ${ENV}
 spec:
   replicas: 1
   strategy:
@@ -9,11 +10,10 @@ spec:
   template:
     metadata:
       labels:
-        app: forgestatus-server-${ENV}
-        env: ${ENV}
+        app: forgestatus-server
     spec:
       containers:
-      - name: forgestatus-server-${ENV}
+      - name: forgestatus-server
         image: gcr.io/forgestatus/forgestatus-server:${CIRCLE_SHA1}
         imagePullPolicy: Always
         env:
@@ -22,7 +22,7 @@ spec:
         - name: PORT
           value: "80"
         - name: REDIS_URL
-          value: "forgestatus-redis-service-${ENV}:6379"
+          value: "forgestatus-redis-service:6379"
         - name: MAX_TASK_QUEUE_SIZE
           value: "100"
         - name: MAX_RESULT_QUEUE_SIZE
