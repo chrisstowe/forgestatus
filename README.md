@@ -69,7 +69,7 @@ A locally running instance of redis is also required.
 ```
 $ make
 $ REDIS_URL=localhost:6379 server
-$ worker
+$ REDIS_URL=localhost:6379 worker
 ```
 
 ### CircleCI
