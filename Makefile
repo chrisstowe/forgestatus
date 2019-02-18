@@ -31,7 +31,7 @@ install: get-dep-server get-dep-worker
 
 unit-test: get-dep-server get-dep-worker
 	@echo ">> unit testing binaries"
-	$(GO) test -v ./common ./server ./worker
+	$(GO) test -v ./common ./server ./worker -tags=unit
 
 integration-test: get-dep-server get-dep-worker
 	@echo ">> integration testing binaries"
