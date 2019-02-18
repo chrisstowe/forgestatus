@@ -9,7 +9,18 @@ jobs:
     steps:
       - checkout
 
-      - run: make test
+      - run: make unit-test
+
+  integration-test:
+    docker:
+      - image: circleci/golang:1.11
+
+    working_directory: /go/src/github.com/chrisstowe/forgestatus
+
+    steps:
+      - checkout
+
+      - run: make integration-test
 
   create-deploy-config:
     machine: true
@@ -65,15 +76,18 @@ workflows:
   build-and-deploy:
     jobs:
       - unit-test
+      - integration-test
       - create-deploy-config
       - docker-publish-server:
           context: forgestatus
           requires:
             - unit-test
+            - integration-test
       - docker-publish-worker:
           context: forgestatus
           requires:
             - unit-test
+            - integration-test
       - deploy:
           context: forgestatus
           requires:
