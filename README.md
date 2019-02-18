@@ -82,7 +82,12 @@ Make a pull request and CircleCI will automatically build, test, and deploy your
 
 There are both unit and integration tests.
 
-There is also a CI gate that prevents code from being merged to master with failing tests.
+```
+$ make unit-test
+$ make integration-test
+```
+
+There is a CI gate that prevents code from being merged to master with failing tests.
 
 Failing tests also trigger a slack alert at [forgestatus.slack.com](forgestatus.slack.com).
 
