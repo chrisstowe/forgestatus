@@ -15,17 +15,6 @@ func Test_ScheduleTask_SerializesCorrectly(t *testing.T) {
 	}
 	defer redisTester.Close()
 
-	taskTypes := []TaskType{
-		GetHealthy,
-		GetReady,
-		GetMemoryUsed,
-		GetCPUUsed,
-		GetDiskUsed,
-		GetProcsRunning,
-		GetDiskIO,
-		GetNetworkTraffic,
-	}
-
 	taskScheduler := NewTaskScheduler(TestRedisURL)
 
 	for _, taskType := range taskTypes {
