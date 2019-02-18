@@ -31,11 +31,11 @@ install: get-dep-server get-dep-worker
 
 unit-test: get-dep-server get-dep-worker
 	@echo ">> unit testing binaries"
-	$(GO) test -v ./common
+	$(GO) test -v ./common -tags=unit
 
 integration-test: get-dep-server get-dep-worker
 	@echo ">> integration testing binaries"
-	$(GO) test -v ./common
+	$(GO) test -v ./common -tags=integration
 
 clean:
 	@echo ">> removing binaries"
