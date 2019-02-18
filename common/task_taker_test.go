@@ -96,8 +96,6 @@ func Test_TakeNextTask_MovesTaskFromPendingToProcessingQueue(t *testing.T) {
 	}
 }
 
-////////
-
 func Test_SetTaskResult_SerializesCorrectly(t *testing.T) {
 	redisTester, err := NewRedisTester()
 	if err != nil {
