@@ -29,12 +29,16 @@ install: get-dep-server get-dep-worker
 	@echo ">> installing binaries"
 	$(GO) install ./server ./worker
 
-test: get-dep-server get-dep-worker
-	@echo ">> testing binaries"
-	$(GO) test -v ./common ./server ./worker
+unit-test: get-dep-server get-dep-worker
+	@echo ">> unit testing binaries"
+	$(GO) test -v ./common -tags=unit
+
+integration-test: get-dep-server get-dep-worker
+	@echo ">> integration testing binaries"
+	$(GO) test -v ./common -tags=integration
 
 clean:
 	@echo ">> removing binaries"
 	rm -rf $(BUILD_DIR)
 
-.PHONY: get-dep-server get-dep-worker build-server build-worker build install test clean
+.PHONY: get-dep-server get-dep-worker build-server build-worker build install unit-test integration-test clean

@@ -69,7 +69,7 @@ A locally running instance of redis is also required.
 ```
 $ make
 $ REDIS_URL=localhost:6379 server
-$ worker
+$ REDIS_URL=localhost:6379 worker
 ```
 
 ### CircleCI
@@ -79,6 +79,13 @@ Make a pull request and CircleCI will automatically build, test, and deploy your
 # Questions
 
 ## Unit/Integration tests?
+
+There are both unit and integration tests.
+
+```
+$ make unit-test
+$ make integration-test
+```
 
 There is a CI gate that prevents code from being merged to master with failing tests.
 

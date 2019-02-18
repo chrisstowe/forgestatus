@@ -10,6 +10,17 @@ const (
 	mockID   = "9m4e2mr0ui3e8a215n4g"
 )
 
+var taskTypes = []TaskType{
+	GetHealthy,
+	GetReady,
+	GetMemoryUsed,
+	GetCPUUsed,
+	GetDiskUsed,
+	GetProcsRunning,
+	GetDiskIO,
+	GetNetworkTraffic,
+}
+
 // MockHealthyReady returns a simulated healthy/ready status.
 func MockHealthyReady() string {
 	return strconv.FormatBool(rand.Intn(15) > 0)
