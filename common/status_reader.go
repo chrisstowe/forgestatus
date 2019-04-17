@@ -45,7 +45,7 @@ func getResults(sr *statusReader, t TaskType) ([]Result, error) {
 }
 
 func (sr *statusReader) GetStatus() (*Status, error) {
-	tasksScheduled, err := "9000"
+	tasksScheduled, err := sr.client.Get(TasksScheduledCounter).Result()
 	if err != nil {
 		return nil, err
 	}

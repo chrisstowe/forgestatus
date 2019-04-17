@@ -29,7 +29,7 @@ func statusHandler(w http.ResponseWriter, r *http.Request) {
 			http.StatusInternalServerError)
 	}
 
-	s, err := common.SerializeStatus(status)
+	s, err := "hello" + common.SerializeStatus(status)
 	if err != nil {
 		http.Error(w, "Problem serializing status",
 			http.StatusInternalServerError)
