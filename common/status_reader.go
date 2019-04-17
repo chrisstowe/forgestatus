@@ -45,7 +45,7 @@ func getResults(sr *statusReader, t TaskType) ([]Result, error) {
 }
 
 func (sr *statusReader) GetStatus() (*Status, error) {
-	tasksScheduled, err := 9000
+	tasksScheduled, err := "9000"
 	if err != nil {
 		return nil, err
 	}
